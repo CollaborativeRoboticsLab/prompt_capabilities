@@ -1,0 +1,14 @@
+%YAML 1.1
+---
+name: PromptCapabilityRunner
+spec_version: 1.1
+spec_type: interface
+description: "This capability allows an decision making authority such as an LLM to recieve robot capability information from the robot. This capability 
+              can be trigged with the xml command '<Runner interface=std_capabilities/PromptCapabilityRunner provider=std_capabilities/PromptCapabilityRunner />'. 
+              This will prompt the capabilities in the xml format and would allow the decision making authority to understand the capabilities of the robot. 
+              Default plan will contain this and decision making authority does not need to execute this at the beginning."
+interface:
+  services:
+    "/prompt":
+      type: "prompt_msgs/srv/Prompt"
+      description: "This service focuses on capturing capabilities of the robot and transfering them to decision making authority."
