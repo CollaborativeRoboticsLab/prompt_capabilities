@@ -36,7 +36,7 @@ public:
 
     std::string data(printer.CStr());
 
-    prompt = "The capabilities of the robot are given as follows" + data;
+    prompt = "The capabilities of the robot are given as follows " + data;
     flush  = false;
   }
 };
