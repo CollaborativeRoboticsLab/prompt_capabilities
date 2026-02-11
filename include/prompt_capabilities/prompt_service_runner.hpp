@@ -30,7 +30,7 @@ public:
    */
   virtual void start(rclcpp::Node::SharedPtr node, const runner_opts& run_config) override
   {
-    init_service(node, run_config, "/prompt_bridge/prompt");
+    init_service(node, run_config, "/prompt/prompt");
   }
 
 protected:
@@ -49,9 +49,13 @@ protected:
   {
     prompt_msgs::srv::Prompt::Request request;
 
+    request.prompt.model_family = "openai";
+    request.prompt.use_cache = true;
+    request.prompt.use_chat_mode = false;
+
     prompt_msgs::msg::ModelOption modelOption1;
     modelOption1.key = "model";
-    modelOption1.value = "llama3.2";
+    modelOption1.value = "gpt-5.1";
 
     request.prompt.options.push_back(modelOption1);
 
@@ -62,7 +66,7 @@ protected:
 
     request.prompt.options.push_back(modelOption2);
 
-    generate_prompt(parameters, id, request.prompt.prompt, request.prompt.flush);
+    generate_prompt(parameters, id, request.prompt.prompt, request.prompt.flush_cache);
     
     return request;
   }
