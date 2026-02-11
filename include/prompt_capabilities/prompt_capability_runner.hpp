@@ -2,7 +2,7 @@
 #include <tinyxml2.h>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
-#include <capabilities2_runner_prompt/prompt_service_runner.hpp>
+#include <prompt_capabilities/prompt_service_runner.hpp>
 
 namespace capabilities2_runner
 {

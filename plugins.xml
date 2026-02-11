@@ -1,4 +1,4 @@
-<library path="capabilities2_runner_prompt">
+<library path="prompt_capabilities">
     <class type="capabilities2_runner::PromptCapabilityRunner" base_class_type="capabilities2_runner::RunnerBase">
         <description>
             A plugin that provide capability prompting capability
