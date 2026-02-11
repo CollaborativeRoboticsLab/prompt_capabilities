@@ -9,6 +9,5 @@
 // register runner plugins
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptTextRunner, capabilities2_runner::RunnerBase)
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptPoseRunner, capabilities2_runner::RunnerBase)
-PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptOccupancyRunner, capabilities2_runner::RunnerBase)
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptPlanRunner, capabilities2_runner::RunnerBase)
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptCapabilityRunner, capabilities2_runner::RunnerBase)
