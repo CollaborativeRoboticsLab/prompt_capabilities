@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <tinyxml2.h>
 #include <pluginlib/class_list_macros.hpp>
 #include <capabilities2_runner/service_runner.hpp>
 #include <prompt_msgs/msg/model_option.hpp>
@@ -27,10 +26,14 @@ public:
    *
    * @param node shared pointer to the capabilities node. Allows to use ros node related functionalities
    * @param run_config runner configuration loaded from the yaml file
+   * @param bond_id unique identifier for the group of connections associated with this runner trigger event
    */
-  virtual void start(rclcpp::Node::SharedPtr node, const runner_opts& run_config) override
+  virtual void start(rclcpp::Node::SharedPtr node, const runner_opts& run_config, const std::string& bond_id) override
   {
     init_service(node, run_config, "/prompt/prompt");
+
+    // emit start event
+    emit_started(bond_id, param_on_started());
   }
 
 protected:
@@ -45,7 +48,7 @@ protected:
    * @param parameters
    * @return prompt_msgs::srv::Prompt::Request the generated request
    */
-  virtual typename prompt_msgs::srv::Prompt::Request generate_request(tinyxml2::XMLElement* parameters, int id) override
+  virtual typename prompt_msgs::srv::Prompt::Request generate_request(capabilities2_events::EventParameters& parameters) override
   {
     prompt_msgs::srv::Prompt::Request request;
 
@@ -66,7 +69,7 @@ protected:
 
     request.prompt.options.push_back(modelOption2);
 
-    generate_prompt(parameters, id, request.prompt.prompt, request.prompt.flush_cache);
+    generate_prompt(parameters, request.prompt.prompt, request.prompt.flush_cache);
     
     return request;
   }
@@ -77,17 +80,17 @@ protected:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(tinyxml2::XMLElement* parameters, int id, std::string& prompt, bool& flush) = 0;
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) = 0;
 
   virtual void process_response(typename prompt_msgs::srv::Prompt::Response::SharedPtr response, int id)
   {
     if (response->response.buffered)
     {
-      info_("information buffered", id);
+      RCLCPP_INFO(node_->get_logger(), "information buffered");
     }
     else
     {
-      info_("response received : " + response->response.response, id);
+      RCLCPP_INFO(node_->get_logger(), "response received : %s", response->response.response.c_str());
     }
   }
 };

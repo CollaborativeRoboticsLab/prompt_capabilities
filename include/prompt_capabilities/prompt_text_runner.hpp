@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <tinyxml2.h>
 #include <pluginlib/class_list_macros.hpp>
 #include <prompt_capabilities/prompt_service_runner.hpp>
 
@@ -26,19 +25,18 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(tinyxml2::XMLElement* parameters, int id, std::string& prompt, bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) override
   {
-    tinyxml2::XMLElement* textElement = parameters->FirstChildElement("Text");
-
-    tinyxml2::XMLPrinter printer;
-    textElement->Accept(&printer);
-
-    std::string data(printer.CStr());
+    std::string data = "";
+    if (parameters.has_value("Text"))
+      data = std::any_cast<std::string>(parameters.get_value("Text"));
+    else
+      RCLCPP_WARN(node_->get_logger(), "No 'Text' parameter found in event parameters. Sending empty prompt.");
 
     prompt = "The response was " + data;
     flush  = true;
 
-    info_("prompting with : " + prompt, id);
+    RCLCPP_INFO(node_->get_logger(), "Generated prompt: %s", prompt.c_str());
   }
 };
 

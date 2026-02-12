@@ -1,5 +1,4 @@
 #pragma once
-#include <tinyxml2.h>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 #include <prompt_capabilities/prompt_service_runner.hpp>
@@ -27,14 +26,13 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(tinyxml2::XMLElement* parameters, int id, std::string& prompt, bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) override
   {
-    tinyxml2::XMLElement* capabilitySpecsElement = parameters->FirstChildElement("CapabilitySpecs");
-
-    tinyxml2::XMLPrinter printer;
-    capabilitySpecsElement->Accept(&printer);
-
-    std::string data(printer.CStr());
+    std::string data = "";
+    if (parameters.has_value("CapabilitySpecs"))
+      data = std::any_cast<std::string>(parameters.get_value("CapabilitySpecs"));
+    else
+      RCLCPP_WARN(node_->get_logger(), "No 'CapabilitySpecs' parameter found in event parameters. Sending empty capabilities.");
 
     prompt = "The capabilities of the robot are given as follows " + data;
     flush  = false;

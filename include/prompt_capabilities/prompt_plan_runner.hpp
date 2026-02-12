@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <tinyxml2.h>
 #include <pluginlib/class_list_macros.hpp>
 #include <prompt_capabilities/prompt_service_runner.hpp>
 
@@ -26,39 +25,46 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(tinyxml2::XMLElement* parameters, int id, std::string& prompt, bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt,
+                               bool& flush) override
   {
-    bool replan;
-    const char* task;
-    std::string taskString;
+    bool replan = false;
+    std::string task = "";
 
-    parameters->QueryBoolAttribute("replan", &replan);
-    parameters->QueryStringAttribute("task", &task);
-
-    if (task)
-      taskString = task;
+    if (parameters.has_value("replan"))
+      replan = std::any_cast<bool>(parameters.get_value("replan"));
     else
-      taskString = "";
+      RCLCPP_WARN(node_->get_logger(), "No 'replan' parameter found in event parameters. Defaulting to false.");
+
+    if (parameters.has_value("task"))
+      task = std::any_cast<std::string>(parameters.get_value("task"));
+    else
+      RCLCPP_WARN(node_->get_logger(), "No 'task' parameter found in event parameters. Defaulting to empty string.");
 
     if (!replan)
     {
-      prompt = "Build a xml plan based on the availbale capabilities to acheive mentioned task of " + taskString +
+      prompt = "Build a xml plan based on the availbale capabilities to acheive mentioned task of " + task +
                ". Return only the xml plan without explanations or comments.";
 
       flush = true;
     }
     else
     {
-      tinyxml2::XMLElement* failedElements = parameters->FirstChildElement("FailedElements");
+      std::string failedElements = "";
+      if (parameters.has_value("FailedElements"))
+        failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements"));
+      else
 
-      prompt = "Rebuild the xml plan based on the availbale capabilities to acheive mentioned task of " + taskString +
+        RCLCPP_WARN(node_->get_logger(), "No 'FailedElements' found in parameters. Defaulting to empty string.");
+
+      prompt = "Rebuild the xml plan based on the availbale capabilities to acheive mentioned task of " + task +
                ". Just give the xml plan without explanations or comments. These XML  "
                "elements had incompatibilities. " +
-               std::string(failedElements->GetText()) + "Recorrect them as well";
+               failedElements + "Recorrect them as well";
       flush = true;
     }
 
-    info_("prompting with : " + prompt, id);
+    RCLCPP_INFO(node_->get_logger(), "prompting with : %s", prompt.c_str());
   }
 
   /**
@@ -72,21 +78,16 @@ public:
    * @param parameters pointer to the XMLElement containing parameters
    * @return pointer to the XMLElement containing updated parameters
    */
-  virtual std::string update_on_success(std::string& parameters)
+  virtual capabilities2_events::EventParameters param_on_success() override
   {
-    tinyxml2::XMLElement* element = convert_to_xml(parameters);
-
     std::string document_string = response_->response.response;
 
-    // Create the plan element as a child of the existing parameters element
-    tinyxml2::XMLElement* textElement = element->GetDocument()->NewElement("ReceievdPlan");
-    element->InsertEndChild(textElement);
-    textElement->SetText(document_string.c_str());
+    capabilities2_events::EventParameters updated_parameters;
+    updated_parameters.set_value("ReceivedPlan", document_string, capabilities2_events::OptionType::STRING);
 
-    // Return the updated parameters element with Pose added
-    std::string result = convert_to_string(element);
+    RCLCPP_INFO(node_->get_logger(), "updated on_success parameters with received plan");
 
-    return result;
+    return updated_parameters;
   };
 };
 

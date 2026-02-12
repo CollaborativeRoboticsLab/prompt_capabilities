@@ -2,7 +2,6 @@
 #include <capabilities2_runner/runner_base.hpp>
 #include <prompt_capabilities/prompt_text_runner.hpp>
 #include <prompt_capabilities/prompt_pose_runner.hpp>
-#include <prompt_capabilities/prompt_occupancy_runner.hpp>
 #include <prompt_capabilities/prompt_plan_runner.hpp>
 #include <prompt_capabilities/prompt_capability_runner.hpp>
 
