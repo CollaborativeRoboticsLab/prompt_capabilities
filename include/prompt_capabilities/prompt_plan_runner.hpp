@@ -28,18 +28,9 @@ public:
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt,
                                bool& flush) override
   {
-    bool replan = false;
-    std::string task = "";
-
-    if (parameters.has_value("replan"))
-      replan = std::any_cast<bool>(parameters.get_value("replan"));
-    else
-      RCLCPP_WARN(node_->get_logger(), "No 'replan' parameter found in event parameters. Defaulting to false.");
-
-    if (parameters.has_value("task"))
-      task = std::any_cast<std::string>(parameters.get_value("task"));
-    else
-      RCLCPP_WARN(node_->get_logger(), "No 'task' parameter found in event parameters. Defaulting to empty string.");
+    bool replan = std::any_cast<bool>(parameters.get_value("replan", false, capabilities2_events::OptionType::BOOL));
+    std::string task = std::any_cast<std::string>(parameters.get_value("task", ""));
+    std::string failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements", ""));
 
     if (!replan)
     {
@@ -50,13 +41,6 @@ public:
     }
     else
     {
-      std::string failedElements = "";
-      if (parameters.has_value("FailedElements"))
-        failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements"));
-      else
-
-        RCLCPP_WARN(node_->get_logger(), "No 'FailedElements' found in parameters. Defaulting to empty string.");
-
       prompt = "Rebuild the xml plan based on the availbale capabilities to acheive mentioned task of " + task +
                ". Just give the xml plan without explanations or comments. These XML  "
                "elements had incompatibilities. " +

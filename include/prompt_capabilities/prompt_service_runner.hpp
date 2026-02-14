@@ -85,13 +85,9 @@ protected:
   virtual void process_response(typename prompt_msgs::srv::Prompt::Response::SharedPtr response, int id)
   {
     if (response->response.buffered)
-    {
       RCLCPP_INFO(node_->get_logger(), "information buffered");
-    }
     else
-    {
       RCLCPP_INFO(node_->get_logger(), "response received : %s", response->response.response.c_str());
-    }
   }
 };
 

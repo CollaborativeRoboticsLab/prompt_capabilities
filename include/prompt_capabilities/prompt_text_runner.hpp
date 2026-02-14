@@ -27,11 +27,7 @@ public:
    */
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) override
   {
-    std::string data = "";
-    if (parameters.has_value("Text"))
-      data = std::any_cast<std::string>(parameters.get_value("Text"));
-    else
-      RCLCPP_WARN(node_->get_logger(), "No 'Text' parameter found in event parameters. Sending empty prompt.");
+    std::string data = std::any_cast<std::string>(parameters.get_value("Text", ""));
 
     prompt = "The response was " + data;
     flush  = true;
