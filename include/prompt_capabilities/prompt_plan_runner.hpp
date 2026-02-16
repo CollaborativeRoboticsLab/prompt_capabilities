@@ -28,7 +28,7 @@ public:
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt,
                                bool& flush) override
   {
-    bool replan = std::any_cast<bool>(parameters.get_value("replan", false, capabilities2_events::OptionType::BOOL));
+    bool replan = std::any_cast<bool>(parameters.get_value("replan", false));
     std::string task = std::any_cast<std::string>(parameters.get_value("task", ""));
     std::string failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements", ""));
 
