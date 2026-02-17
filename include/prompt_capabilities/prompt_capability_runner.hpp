@@ -26,12 +26,19 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
-    std::string data = std::any_cast<std::string>(parameters.get_value("CapabilitySpecs", ""));;
+    std::vector<std::string> data =
+      std::any_cast<std::vector<std::string>>(parameters.get_value("CapabilitySpecs", std::vector<std::string>{}));
 
-    prompt = "The capabilities of the robot are given as follows " + data;
-    flush  = false;
+    RCLCPP_INFO(node_->get_logger(), "PromptCapabilityRunner generating prompt with %zu capability specs", data.size());
+
+    prompt = "The capabilities of the robot are given as follows ";
+
+    for (const auto& capability : data)
+    {
+      prompt += capability + "; ";
+    }
   }
 };
 

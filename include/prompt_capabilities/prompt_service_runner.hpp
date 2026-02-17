@@ -50,11 +50,21 @@ protected:
    */
   virtual typename prompt_msgs::srv::Prompt::Request generate_request(capabilities2_events::EventParameters& parameters) override
   {
+    bool flush = std::any_cast<bool>(parameters.get_value("flush", false));
+    RCLCPP_INFO(node_->get_logger(), "Generating prompt request with flush option: %s", flush ? "true" : "false");
+
+    std::string uuid = std::any_cast<std::string>(parameters.get_value("uuid", std::string{}));
+    RCLCPP_INFO(node_->get_logger(), "Generating prompt request with uuid: %s", uuid.c_str());
+
     prompt_msgs::srv::Prompt::Request request;
 
+    if (!uuid.empty())
+      request.uuid = uuid;
+    
     request.prompt.model_family = "openai";
     request.prompt.use_cache = true;
     request.prompt.use_chat_mode = false;
+    request.prompt.flush_cache = flush;
 
     prompt_msgs::msg::ModelOption modelOption1;
     modelOption1.key = "model";
@@ -69,7 +79,7 @@ protected:
 
     request.prompt.options.push_back(modelOption2);
 
-    generate_prompt(parameters, request.prompt.prompt, request.prompt.flush_cache);
+    generate_prompt(parameters, request.prompt.prompt);
     
     return request;
   }
@@ -80,12 +90,12 @@ protected:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) = 0;
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) = 0;
 
-  virtual void process_response(typename prompt_msgs::srv::Prompt::Response::SharedPtr response, int id)
+  virtual void process_response(typename prompt_msgs::srv::Prompt::Response::SharedPtr response) override
   {
     if (response->response.buffered)
-      RCLCPP_INFO(node_->get_logger(), "information buffered");
+      RCLCPP_INFO(node_->get_logger(), "information buffered with uuid %s", response->uuid.c_str());
     else
       RCLCPP_INFO(node_->get_logger(), "response received : %s", response->response.response.c_str());
   }

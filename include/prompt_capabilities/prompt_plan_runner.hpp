@@ -25,19 +25,16 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt,
-                               bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
     bool replan = std::any_cast<bool>(parameters.get_value("replan", false));
-    std::string task = std::any_cast<std::string>(parameters.get_value("task", ""));
-    std::string failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements", ""));
+    std::string task = std::any_cast<std::string>(parameters.get_value("task", std::string{}));
+    std::string failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements", std::string{}));
 
     if (!replan)
     {
       prompt = "Build a xml plan based on the availbale capabilities to acheive mentioned task of " + task +
                ". Return only the xml plan without explanations or comments.";
-
-      flush = true;
     }
     else
     {
@@ -45,7 +42,6 @@ public:
                ". Just give the xml plan without explanations or comments. These XML  "
                "elements had incompatibilities. " +
                failedElements + "Recorrect them as well";
-      flush = true;
     }
 
     RCLCPP_INFO(node_->get_logger(), "prompting with : %s", prompt.c_str());

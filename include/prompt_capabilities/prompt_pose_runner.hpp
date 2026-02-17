@@ -25,8 +25,7 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt,
-                               bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
     double x, y, z, qx, qy, qz, qw;
 
@@ -43,8 +42,6 @@ public:
              std::to_string(x) + ", y: " + std::to_string(y) + ", z: " + std::to_string(z) +
              ", qx: " + std::to_string(qx) + ", qy: " + std::to_string(qy) + ", qz: " + std::to_string(qz) +
              ", qw: " + std::to_string(qw);
-
-    flush = false;
 
     RCLCPP_INFO(node_->get_logger(), "Prompt generated: %s", prompt.c_str());
   }

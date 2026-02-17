@@ -25,12 +25,11 @@ public:
    * @param parameters tinyXML2 parameters
    * @return std::string
    */
-  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt, bool& flush) override
+  virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
-    std::string data = std::any_cast<std::string>(parameters.get_value("Text", ""));
+    std::string data = std::any_cast<std::string>(parameters.get_value("Text", std::string{}));
 
     prompt = "The response was " + data;
-    flush  = true;
 
     RCLCPP_INFO(node_->get_logger(), "Generated prompt: %s", prompt.c_str());
   }
