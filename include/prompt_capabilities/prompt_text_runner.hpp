@@ -27,7 +27,7 @@ public:
    */
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
-    std::string data = std::any_cast<std::string>(parameters.get_value("Text", std::string{}));
+    std::string data = std::any_cast<std::string>(parameters.get_value("text", std::string{}));
 
     prompt = "The response was " + data;
 
