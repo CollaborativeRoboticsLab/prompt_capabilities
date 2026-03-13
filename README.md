@@ -11,3 +11,32 @@ Provides capabiilites2 runners for PromptTools stack
 | Prompt Plan runner | prompts LLM requesting a new execution plan for a given task |
 | Prompt Pose runner | prompts LLM about the pose of the robot |
 | Prompt Text runner | prompts LLM about audio response to the robot |
+
+## Examples
+
+Examples depend on [CollaborativeRoboticsLab/capabilities2](https://github.com/CollaborativeRoboticsLab/capabilities2) and [CollaborativeRoboticsLab/prompt_tools](https://github.com/CollaborativeRoboticsLab/prompt_tools). Following examples have been tested against turtlebot3 simulation using [CollaborativeRoboticsLab/turtlebot3-docker](https://github.com/CollaborativeRoboticsLab/turtlebot3-docker)
+
+| Example | Description |
+| ---     | ---         |
+| [Example 1](./docs/example1.md) | Implements requesting for robot's capabilities and prompting them to the LLM |
+| [Example 2](./docs/example2.md) | Implements listening for robot's pose and prompting them to the LLM 
+| [Example 3](./docs/example3.md) | Implements prompting the LLM for a plan for a new task and setting it to Fabric |
+
+
+To run the examples, first make sure that the simulation is running and then on seperate terminals run,
+
+```bash
+source install/setup.bash
+ros2 launch capabilities2_server capabilities2_server.launch.py
+```
+
+```bash
+export OPENAI_API_KEY=
+source install/setup.bash
+ros2 launch prompt_bridge prompt_bridge.launch.py
+```
+
+```bash
+source install/setup.bash
+ros2 launch prompt_capabilities system.launch.py filename:=prompt_1.xml
+```
