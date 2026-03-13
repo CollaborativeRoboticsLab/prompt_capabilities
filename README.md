@@ -18,9 +18,9 @@ Examples depend on [CollaborativeRoboticsLab/capabilities2](https://github.com/C
 
 | Example | Description |
 | ---     | ---         |
-| [Example 1](./docs/example1.md) | Implements requesting for robot's capabilities and prompting them to the LLM |
-| [Example 2](./docs/example2.md) | Implements listening for robot's pose and prompting them to the LLM 
-| [Example 3](./docs/example3.md) | Implements prompting the LLM for a plan for a new task and setting it to Fabric |
+| [prompt_1.xml](./plans/prompt_1.xml) | Implements requesting for robot's capabilities and prompting them to the LLM |
+| [prompt_2.xml](./plans/prompt_2.xml) | Implements listening for robot's pose and prompting them to the LLM 
+| [prompt_3.xml](./plans/prompt_3.xml) | Implements prompting the LLM for a plan for a new task and setting it to Fabric. This example also utilize an externally provided UUID to keep the Prompt Tools side cache consistent accross different runners. |
 
 
 To run the examples, first make sure that the simulation is running and then on seperate terminals run,
@@ -40,3 +40,5 @@ ros2 launch prompt_bridge prompt_bridge.launch.py
 source install/setup.bash
 ros2 launch prompt_capabilities system.launch.py filename:=prompt_1.xml
 ```
+
+Change `filename:=prompt_1.xml` to match the correct plan
