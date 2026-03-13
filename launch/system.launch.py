@@ -19,7 +19,7 @@ def generate_launch_description():
     plan_file_path = os.path.join(get_package_share_directory('prompt_capabilities'), 'plans', plan_file_name)
 
     # load config file
-    fabric_config = os.path.join(get_package_share_directory('fabric'), 'config', 'fabric.yaml')
+    fabric_config = os.path.join(get_package_share_directory('fabric_server'), 'config', 'fabric.yaml')
 
     fabric = Node(
             package='fabric_server',
