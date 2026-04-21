@@ -29,7 +29,7 @@ public:
   {
     std::string data = std::any_cast<std::string>(parameters.get_value("text", std::string{}));
 
-    prompt = "The response was " + data;
+    prompt = data;
 
     RCLCPP_INFO(node_->get_logger(), "Generated prompt: %s", prompt.c_str());
   }

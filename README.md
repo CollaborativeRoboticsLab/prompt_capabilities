@@ -11,6 +11,8 @@ Provides capabiilites2 runners for PromptTools stack. These are required by the 
 | Prompt Pose runner        | Information Gathering | prompts LLM about the pose of the robot |
 | Prompt Text runner        | Information Gathering | prompts LLM about audio response to the robot |
 
+For information about these runners' interfaces, please refer to [Interface Information](./docs/interface.md) section.
+
 ## Examples
 
 Examples depend on [CollaborativeRoboticsLab/capabilities2](https://github.com/CollaborativeRoboticsLab/capabilities2) and [CollaborativeRoboticsLab/prompt_tools](https://github.com/CollaborativeRoboticsLab/prompt_tools). Following examples have been tested against turtlebot3 simulation using [CollaborativeRoboticsLab/turtlebot3-docker](https://github.com/CollaborativeRoboticsLab/turtlebot3-docker)

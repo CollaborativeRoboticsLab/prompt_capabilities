@@ -29,7 +29,7 @@ public:
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
     std::vector<std::string> data =
-      std::any_cast<std::vector<std::string>>(parameters.get_value("CapabilitySpecs", std::vector<std::string>{}));
+      std::any_cast<std::vector<std::string>>(parameters.get_value("capabilitySpecs", std::vector<std::string>{}));
 
     RCLCPP_INFO(node_->get_logger(), "PromptCapabilityRunner generating prompt with %zu capability specs", data.size());
 

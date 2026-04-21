@@ -29,7 +29,7 @@ public:
   {
     bool replan = std::any_cast<bool>(parameters.get_value("replan", false));
     std::string task = std::any_cast<std::string>(parameters.get_value("task", std::string{}));
-    std::string failedElements = std::any_cast<std::string>(parameters.get_value("FailedElements", std::string{}));
+    std::string failedElements = std::any_cast<std::string>(parameters.get_value("failedElements", std::string{}));
 
     if (!replan)
     {
@@ -63,7 +63,7 @@ public:
     std::string document_string = response_->response.response;
 
     capabilities2_events::EventParameters updated_parameters;
-    updated_parameters.set_value("ReceivedPlan", document_string, capabilities2_events::OptionType::STRING);
+    updated_parameters.set_value("plan", document_string, capabilities2_events::OptionType::STRING);
 
     RCLCPP_INFO(node_->get_logger(), "updated on_success parameters with received plan");
 
