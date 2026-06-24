@@ -74,7 +74,7 @@ protected:
 
     prompt_msgs::msg::ModelOption modelOption2;
     modelOption2.key = "stream";
-    modelOption2.value = false;
+    modelOption2.value = "false";
     modelOption2.type = prompt_msgs::msg::ModelOption::BOOL_TYPE;
 
     request.prompt.options.push_back(modelOption2);

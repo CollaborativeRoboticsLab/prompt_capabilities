@@ -8,7 +8,7 @@ Input Parameters:
 
 | Parameter Name    | Type   | Description |
 | ---               | ---    | ---         |
-| capabilitySpecs   | string | Capability Specifications |
+| CapabilitySpecs   | string | Capability Specifications |
 | uuid              | string | The uuid used to keep track of the prompts and their responses. |
 | flush             | bool   | Whether to flush the accumulated information for the current prompt. |
 
