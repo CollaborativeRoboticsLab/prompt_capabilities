@@ -64,15 +64,6 @@
       providers/PromptCapabilityRunner.yaml
     </capability_provider>
 
-    <!-- PromptOccupancyRunner -->
-    <capability_interface>
-      interfaces/PromptOccupancyRunner.yaml
-    </capability_interface>
-
-    <capability_provider>
-      providers/PromptOccupancyRunner.yaml
-    </capability_provider>
-
     <!-- PromptPlanRunner -->
     <capability_interface>
       interfaces/PromptPlanRunner.yaml
