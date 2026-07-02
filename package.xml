@@ -73,5 +73,14 @@
       providers/PromptPlanRunner.yaml
     </capability_provider>
 
+    <!-- PromptSpeechRunner -->
+    <capability_interface>
+      interfaces/PromptSpeechRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptSpeechRunner.yaml
+    </capability_provider>
+
   </export>
 </package>

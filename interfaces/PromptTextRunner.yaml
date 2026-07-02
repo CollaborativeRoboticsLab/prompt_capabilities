@@ -3,12 +3,11 @@
 name: PromptTextRunner
 spec_version: 1.1
 spec_type: interface
-description: "This capability allows an decision making authority such as an LLM to recieve audio data as text from the robot. This capability can be 
-              trigged with the xml command '<Runner interface=prompt_capabilities/PromptTextRunner provider=prompt_capabilities/PromptTextRunner />'. This will 
-              prompt the decision making authority in the xml format and would allow the decision making authority to understand the audio input the 
-              robot receives."
+description: "This capability allows a plan to share additional information with a decision making authority such as an LLM. This capability can be 
+              trigged with the xml command '<Runner interface=prompt_capabilities/PromptTextRunner provider=prompt_capabilities/PromptTextRunner text='$text' uuid='$uuid'/>'. 
+              $text will hold the information to be shared. $uuid will hold the unique identifier for this interaction. This will prompt the decision making authority."
 interface:
   services:
     "/prompt":
       type: "prompt_msgs/srv/Prompt"
-      description: "This capability focuses on capturing speech towards robot as text and transfering them to decision making authority."
+      description: "This capability focuses on capturing information from the robot as text and transferring it to the decision making authority."

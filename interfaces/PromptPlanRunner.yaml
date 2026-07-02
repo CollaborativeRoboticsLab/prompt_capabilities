@@ -43,7 +43,10 @@ description: "This capability requests to create a new plan at the end of an exe
                     <Runner interface='nav2_capabilities/WaypointRunner' provider='nav2_capabilities/WaypointRunner' x='2.0' y='2.0' />
                     <Runner interface='nav2_capabilities/WaypointRunner' provider='nav2_capabilities/WaypointRunner' x='3.0' y='1.0' />
                     </Control>
-                </Plan>'"
+                </Plan>'
+                
+              If there are multiple prompt capabilities in a plan, keep the same uuid value for all prompt capabilities in the plan. This will ensure that the LLM 
+              has the context of the entire plan and can generate a new plan or speech based on the entire context."
 interface:
   services:
     "/prompt":
