@@ -29,7 +29,7 @@ public:
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
     std::string task = std::any_cast<std::string>(parameters.get_value("task", std::string{}));
-    prompt = "Generate a speech text for the following task: " + task + ". Return only the speech text without explanations or comments.";
+    prompt = "Generate a human like verbal response for " + task + ". Return only the speech text without explanations or comments.";
 
     RCLCPP_INFO(node_->get_logger(), "prompting with : %s", prompt.c_str());
   }
