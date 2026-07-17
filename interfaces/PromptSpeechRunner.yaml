@@ -3,15 +3,15 @@
 name: PromptSpeechRunner
 spec_version: 1.1
 spec_type: interface
-description: "This capability prompts the LLM for text that should be spoken aloud and exposes the returned text to downstream runners. This capability can be 
-              triggered with the xml command '<Runner interface=prompt_capabilities/PromptSpeechRunner provider=prompt_capabilities/PromptSpeechRunner info='$value' flush='true' uuid='$value' />'. 
-              The `info` value is sent to the LLM as the speech-generation prompt. This can be used after any prompt_capability to flush the current context and get a 
+description: "This capability prompts the LLM for text that should be spoken aloud and exposes the returned text to downstream runners. This capability can be
+              triggered with the xml command '<Runner interface=prompt_capabilities/PromptSpeechRunner provider=prompt_capabilities/PromptSpeechRunner task='$value' flush='true' uuid='$value' />'.
+              The `task` value is sent to the LLM as the speech-generation prompt. This can be used after any prompt capability to flush the current context and get a
               speech response when the robot is expected to speak. `prompt_capabilities/PromptTextRunner` is a major predecessor that can come before this capability
-              to provide additional context. When the prompt response is received, this runner emits it as a `text` output parameter so it can be consumed directly 
-              by `perception_capabilities/SpeechRunner`. Use `flush='true'` when this step should finalize the current cached prompt context before generating the 
+              to provide additional context. When the prompt response is received, this runner emits it as a `text` output parameter so it can be consumed directly
+              by `perception_capabilities/SpeechRunner`. Use `flush='true'` when this step should finalize the current cached prompt context before generating the
               speakable response."
 interface:
   services:
-    "/prompt":
+    "/prompt/prompt":
       type: "prompt_msgs/srv/Prompt"
       description: "This capability focuses on requesting a decision making authority to generate speech text for downstream speech synthesis."

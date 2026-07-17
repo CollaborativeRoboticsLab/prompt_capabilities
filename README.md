@@ -8,8 +8,9 @@ Provides capabiilites2 runners for PromptTools stack. These are required by the 
 | ---                       | ---   | ---          |
 | Prompt Capability runner  | Plan Generation | prompts LLM about the capabilities available on the robot |
 | Prompt Plan runner        | Plan Generation  | prompts LLM requesting a new execution plan for a given task |
+| Prompt Speech runner      | Information Gathering | prompts the LLM to generate speech text for downstream synthesis |
 | Prompt Pose runner        | Information Gathering | prompts LLM about the pose of the robot |
-| Prompt Text runner        | Information Gathering | prompts LLM about audio response to the robot |
+| Prompt Text runner        | Information Gathering | forwards text context to the LLM through the prompt service |
 
 For information about these runners' interfaces, please refer to [Interface Information](./docs/interface.md) section.
 
