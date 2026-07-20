@@ -8,7 +8,7 @@ description: "This capability prompts the LLM for text that should be spoken alo
               The `task` value is sent to the LLM as the speech-generation prompt. This can be used after any prompt capability to flush the current context and get a
               speech response when the robot is expected to speak. `prompt_capabilities/PromptTextRunner` is a major predecessor that can come before this capability
               to provide additional context. When the prompt response is received, this runner emits it as a `text` output parameter so it can be consumed directly
-              by `perception_capabilities/SpeechRunner`. Use `flush='true'` when this step should finalize the current cached prompt context before generating the
+              by `fp_perception_capabilities/SpeechRunner`. Use `flush='true'` when this step should finalize the current cached prompt context before generating the
               speakable response."
 interface:
   services:
