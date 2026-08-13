@@ -56,24 +56,6 @@
       providers/PromptPoseRunner.yaml
     </capability_provider>
 
-    <!-- PromptCapabilityRunner -->
-    <capability_interface>
-      interfaces/PromptCapabilityRunner.yaml
-    </capability_interface>
-
-    <capability_provider>
-      providers/PromptCapabilityRunner.yaml
-    </capability_provider>
-
-    <!-- PromptPlanRunner -->
-    <capability_interface>
-      interfaces/PromptPlanRunner.yaml
-    </capability_interface>
-
-    <capability_provider>
-      providers/PromptPlanRunner.yaml
-    </capability_provider>
-
     <!-- PromptSpeechRunner -->
     <capability_interface>
       interfaces/PromptSpeechRunner.yaml

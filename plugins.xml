@@ -1,14 +1,4 @@
 <library path="prompt_capabilities">
-    <class type="capabilities2_runner::PromptCapabilityRunner" base_class_type="capabilities2_runner::RunnerBase">
-        <description>
-            A plugin that provide capability prompting capability
-        </description>
-    </class>
-    <class type="capabilities2_runner::PromptPlanRunner" base_class_type="capabilities2_runner::RunnerBase">
-        <description>
-            A plugin that requests a new pplan based on available capabilities and a defined task
-        </description>
-    </class>
     <class type="capabilities2_runner::PromptSpeechRunner" base_class_type="capabilities2_runner::RunnerBase">
         <description>
             A plugin that prompts an LLM for speech text and exposes the response to downstream speech synthesis runners
