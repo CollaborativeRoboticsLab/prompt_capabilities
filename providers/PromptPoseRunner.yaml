@@ -3,7 +3,51 @@
 ---
 name: PromptPoseRunner
 spec_type: provider
-spec_version: 1.1
-description: "The capability provider for the prompting interface from prompt tools. This can be used for prompting pose of the robot."
+spec_version: 1.2
+description: "The provider for the robot pose prompting capability and uses functionalities 
+              from prompt tools stack"
 implements: prompt_capabilities/PromptPoseRunner
 runner: capabilities2_runner::PromptPoseRunner
+
+definition: 
+  command: "'<Runner interface=prompt_capabilities/PromptPoseRunner provider=prompt_capabilities/PromptPoseRunner uuid='$uuid' flush='false' />'"
+  configuration_parameters:
+    - name: uuid
+      type: string
+      description: "The unique identifier to match the correct prompt tools cache that contains
+                    the information needed for planning which are cached before and after this 
+                    capability by other capabilities."
+    - name: flush
+      type: boolean
+      description: "A boolean to indicate whether to flush the current prompt tools cache or not. 
+                    This needs to be 'true' if this is the last capability in the plan with flush 
+                    parameter indicating all information has been cached. If not set, it should 
+                    be 'false'."
+  runtime_parameters:
+    input:
+      - name: x
+        type: double
+        description: "The x position of the robot in the environment"
+      - name: y
+        type: double
+        description: "The y position of the robot in the environment"
+      - name: z
+        type: double
+        description: "The z position of the robot in the environment"
+      - name: qx
+        type: double
+        description: "The qx orientation of the robot in the environment"
+      - name: qy
+        type: double
+        description: "The qy orientation of the robot in the environment"
+      - name: qz
+        type: double
+        description: "The qz orientation of the robot in the environment"
+      - name: qw
+        type: double
+        description: "The qw orientation of the robot in the environment"
+        
+relations:
+  - subject: prompt_capabilities/PromptPoseRunner
+    predicate: depends_on
+    object: nav2_capabilities/RobotPoseRunner

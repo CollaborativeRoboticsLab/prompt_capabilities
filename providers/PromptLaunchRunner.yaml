@@ -3,7 +3,8 @@
 ---
 name: PromptLaunchRunner
 spec_type: provider
-spec_version: 1.1
-description: "The capability provider for the prompt tools"
+spec_version: 1.2
+description: "The provider for the prompt tools stack launch. This is a core dependency 
+              for other capabilities that use prompting functionalities."
 implements: prompt_capabilities/PromptLaunchRunner
 runner: prompt_bridge/prompt_bridge.launch.py

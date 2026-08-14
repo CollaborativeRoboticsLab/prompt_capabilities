@@ -28,7 +28,7 @@ public:
    */
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) override
   {
-    std::string task = std::any_cast<std::string>(parameters.get_value("task", std::string{}));
+    std::string task = std::any_cast<std::string>(parameters.get_value("speech_text", std::string{}));
     prompt = "Generate a human like verbal response for " + task + ". Return only the speech text without explanations or comments.";
 
     RCLCPP_INFO(node_->get_logger(), "prompting with : %s", prompt.c_str());
@@ -41,7 +41,7 @@ public:
     if (!response_)
       return updated_parameters;
 
-    updated_parameters.set_value("text", response_->response.response, capabilities2_events::OptionType::STRING);
+    updated_parameters.set_value("speech", response_->response.response, capabilities2_events::OptionType::STRING);
 
     RCLCPP_INFO(node_->get_logger(), "updated on_success parameters with received speech text");
 
