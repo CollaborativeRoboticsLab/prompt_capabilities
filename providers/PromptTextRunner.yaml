@@ -10,18 +10,25 @@ implements: prompt_capabilities/PromptTextRunner
 runner: capabilities2_runner::PromptTextRunner
 
 definition: 
-  command: "<Runner interface=prompt_capabilities/PromptTextRunner provider=prompt_capabilities/PromptTextRunner text='$text' uuid='$uuid' flush='false' />'"
+  command: "<Runner interface=prompt_capabilities/PromptTextRunner provider=prompt_capabilities/PromptTextRunner text='$text' uuid='$uuid' flush='$flush' />"
   configuration_parameters:
     - name: text
       type: string
+      semantic_key: prompt.text
       description: "The text or information to be shared with the planning entity"
     - name: uuid
       type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
       description: "The unique identifier to match the correct prompt tools cache that contains
                     the information needed for planning which are cached before and after this 
                     capability by other capabilities."
     - name: flush
       type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
       description: "A boolean to indicate whether to flush the current prompt tools cache or not. 
                     This needs to be 'true' if this is the last capability in the plan with flush 
                     parameter indicating all information has been cached. If not set, it should 
@@ -30,4 +37,8 @@ definition:
     input:
       - name: text
         type: string
+        semantic_key: prompt.text
+        required: true
+        satisfiable_from: [upstream, configuration]
+        fallback_parameter: text
         description: "The text or information to be shared with the planning entity"

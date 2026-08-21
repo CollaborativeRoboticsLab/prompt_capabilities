@@ -10,15 +10,21 @@ implements: prompt_capabilities/PromptPoseRunner
 runner: capabilities2_runner::PromptPoseRunner
 
 definition: 
-  command: "'<Runner interface=prompt_capabilities/PromptPoseRunner provider=prompt_capabilities/PromptPoseRunner uuid='$uuid' flush='false' />'"
+  command: "<Runner interface=prompt_capabilities/PromptPoseRunner provider=prompt_capabilities/PromptPoseRunner uuid='$uuid' flush='$flush' />"
   configuration_parameters:
     - name: uuid
       type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
       description: "The unique identifier to match the correct prompt tools cache that contains
                     the information needed for planning which are cached before and after this 
                     capability by other capabilities."
     - name: flush
       type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
       description: "A boolean to indicate whether to flush the current prompt tools cache or not. 
                     This needs to be 'true' if this is the last capability in the plan with flush 
                     parameter indicating all information has been cached. If not set, it should 
@@ -27,24 +33,41 @@ definition:
     input:
       - name: x
         type: double
+        semantic_key: prompt.robot_pose.x
         description: "The x position of the robot in the environment"
       - name: y
         type: double
+        semantic_key: prompt.robot_pose.y
         description: "The y position of the robot in the environment"
       - name: z
         type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.robot_pose.z
         description: "The z position of the robot in the environment"
       - name: qx
         type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.robot_pose.qx
         description: "The qx orientation of the robot in the environment"
       - name: qy
         type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.robot_pose.qy
         description: "The qy orientation of the robot in the environment"
       - name: qz
         type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.robot_pose.qz
         description: "The qz orientation of the robot in the environment"
       - name: qw
         type: double
+        optional: true
+        default: 1.0
+        semantic_key: prompt.robot_pose.qw
         description: "The qw orientation of the robot in the environment"
         
 relations:

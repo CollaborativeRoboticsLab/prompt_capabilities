@@ -10,18 +10,25 @@ implements: prompt_capabilities/PromptSpeechRunner
 runner: capabilities2_runner::PromptSpeechRunner
 
 definition: 
-  command: "<Runner interface=prompt_capabilities/PromptSpeechRunner provider=prompt_capabilities/PromptSpeechRunner speech_text='$value' flush='true' uuid='$value' />'"
+  command: "<Runner interface=prompt_capabilities/PromptSpeechRunner provider=prompt_capabilities/PromptSpeechRunner speech_text='$speech_text' flush='$flush' uuid='$uuid' />"
   configuration_parameters:
     - name: speech_text
       type: string
+      semantic_key: prompt.speech
       description: "The text or information to be converted to speech."
     - name: uuid
       type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
       description: "The unique identifier to match the correct prompt tools cache that contains
                     the information needed for planning which are cached before and after this 
                     capability by other capabilities."
     - name: flush
       type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
       description: "A boolean to indicate whether to flush the current prompt tools cache or not. 
                     This needs to be 'true' if this is the last capability in the plan with flush 
                     parameter indicating all information has been cached. If not set, it should 
