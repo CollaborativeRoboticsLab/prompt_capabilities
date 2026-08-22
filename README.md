@@ -20,9 +20,8 @@ Examples depend on [CollaborativeRoboticsLab/capabilities2](https://github.com/C
 
 | Example | Description |
 | ---     | ---         |
-| [prompt_1.xml](./plans/prompt_1.xml) | Implements requesting for robot's capabilities and prompting them to the LLM |
-| [prompt_2.xml](./plans/prompt_2.xml) | Implements listening for robot's pose and prompting them to the LLM |  
-| [prompt_3.xml](./plans/prompt_3.xml) | Implements prompting the LLM for a plan for a new task and setting it to Fabric. This example also utilize an externally provided UUID to keep the Prompt Tools side cache consistent accross different runners. |
+| [prompt_1.xml](./plans/prompt_1.xml) | Implements listening for robot's pose and prompting them to the LLM |  
+| [prompt_2.xml](./plans/prompt_2.xml) | Implements prompting the LLM for a plan for a new task and setting it to Fabric. This example also utilize an externally provided UUID to keep the Prompt Tools side cache consistent accross different runners. |
 
 ## Setup
 
