@@ -2,7 +2,7 @@
 
 Following are the details of the interfaces provided by the Prompt Capabilities package. A runner that intends to connect with one of these interfaces should support the input and ouput parameters described below.
 
-The state-based prompt runners consume runtime input from upstream capabilities. In a concrete plan, place the matching state runner immediately before the prompt runner so the required values are available in sequence.
+The state-based prompt runners consume runtime input from upstream capabilities. In a concrete plan, place the matching state runner immediately before the prompt runner so the required values are available in sequence. If the final goal is fabric plan generation rather than prompt-only context capture, keep that example under `fabric_capabilities/plans`.
 
 ## PromptCapabilityRunner
 

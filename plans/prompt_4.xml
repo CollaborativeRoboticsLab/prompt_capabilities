@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Plan>
-    <Control type="sequential" name="plan_open_gripper_from_state">
+    <Control type="sequential" name="prompt_manipulator_joint_pose">
         <Runner
-            interface="gripper_capabilities/GripperStateRunner"
-            provider="gripper_capabilities/GripperStateRunner"
+            interface="moveit2_capabilities/CurrentJointPoseRunner"
+            provider="moveit2_capabilities/CurrentJointPoseRunner"
             timeout_sec="2.0" />
         <Runner
-            interface="prompt_capabilities/PromptGripperStateRunner"
-            provider="prompt_capabilities/PromptGripperStateRunner"
-            uuid="prompt-gripper-open"
-            flush="false" />
-        <Runner
-            interface="fabric_capabilities/FabricGeneratePlanRunner"
-            provider="fabric_capabilities/FabricGeneratePlanRunner"
-            task="Given the current gripper joint state, generate a plan to open the gripper."
-            uuid="prompt-gripper-open"
+            interface="prompt_capabilities/PromptCurrentJointPoseRunner"
+            provider="prompt_capabilities/PromptCurrentJointPoseRunner"
             flush="true" />
     </Control>
 </Plan>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Plan>
-    <Control type="sequential" >
-        <Runner interface="nav2_capabilities/RobotPoseRunner" provider="nav2_capabilities/RobotPoseRunner" map="map" odom="odom" robot="base_link"/>
-        <Runner interface="prompt_capabilities/PromptPoseRunner" provider="prompt_capabilities/PromptPoseRunner" flush="false" uuid="prompt-test-uuid"/>
-        <Runner interface="fabric_capabilities/FabricGeneratePlanRunner" provider="fabric_capabilities/FabricGeneratePlanRunner" task="move to x:1 and y:2 position" flush="true" uuid="prompt-test-uuid"/>
+    <Control type="sequential" name="prompt_gripper_joint_state">
+        <Runner
+            interface="gripper_capabilities/GripperStateRunner"
+            provider="gripper_capabilities/GripperStateRunner"
+            timeout_sec="2.0" />
+        <Runner
+            interface="prompt_capabilities/PromptGripperStateRunner"
+            provider="prompt_capabilities/PromptGripperStateRunner"
+            flush="true" />
     </Control>
 </Plan>

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Plan>
-    <Control type="sequential" name="prompt_gripper_joint_state">
+    <Control type="sequential" name="prompt_cartesian_pose">
         <Runner
-            interface="gripper_capabilities/GripperStateRunner"
-            provider="gripper_capabilities/GripperStateRunner"
-            timeout_sec="2.0" />
+            interface="moveit2_capabilities/CurrentCartesianPoseRunner"
+            provider="moveit2_capabilities/CurrentCartesianPoseRunner"
+            from_frame="base_link"
+            to_frame="tcp"
+            time_buffer="5.0" />
         <Runner
-            interface="prompt_capabilities/PromptGripperStateRunner"
-            provider="prompt_capabilities/PromptGripperStateRunner"
+            interface="prompt_capabilities/PromptCurrentCartesianPoseRunner"
+            provider="prompt_capabilities/PromptCurrentCartesianPoseRunner"
             flush="true" />
     </Control>
 </Plan>
