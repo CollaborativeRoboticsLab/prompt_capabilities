@@ -1,0 +1,13 @@
+%YAML 1.1
+---
+name: PromptCurrentCartesianPoseRunner
+spec_version: 1.2
+spec_type: interface
+description: "This capability prompts the current manipulator Cartesian pose and 
+              forwards that state into prompt_tools for downstream reasoning."
+interface:
+  services:
+    "/prompt/prompt":
+      type: "prompt_msgs::srv::Prompt"
+      description: "Prompt tools service used to cache or return a prompt describing 
+                    the current manipulator Cartesian pose."

@@ -56,6 +56,33 @@
       providers/PromptPoseRunner.yaml
     </capability_provider>
 
+    <!-- PromptCurrentCartesianPoseRunner -->
+    <capability_interface>
+      interfaces/PromptCurrentCartesianPoseRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptCurrentCartesianPoseRunner.yaml
+    </capability_provider>
+
+    <!-- PromptCurrentJointPoseRunner -->
+    <capability_interface>
+      interfaces/PromptCurrentJointPoseRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptCurrentJointPoseRunner.yaml
+    </capability_provider>
+
+    <!-- PromptGripperStateRunner -->
+    <capability_interface>
+      interfaces/PromptGripperStateRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptGripperStateRunner.yaml
+    </capability_provider>
+
     <!-- PromptSpeechRunner -->
     <capability_interface>
       interfaces/PromptSpeechRunner.yaml

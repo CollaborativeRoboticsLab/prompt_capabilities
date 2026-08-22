@@ -1,0 +1,46 @@
+%YAML 1.1
+---
+name: PromptGripperStateRunner
+spec_type: provider
+spec_version: 1.2
+description: "The provider for prompting the current gripper articulation state through 
+              prompt_tools."
+implements: prompt_capabilities/PromptGripperStateRunner
+runner: capabilities2_runner::PromptGripperStateRunner
+
+definition:
+  command: "<Runner interface=prompt_capabilities/PromptGripperStateRunner provider=prompt_capabilities/PromptGripperStateRunner uuid='$uuid' flush='$flush' />"
+  configuration_parameters:
+    - name: uuid
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
+      description: "Prompt cache identifier used to append this gripper-state information 
+                    to an existing prompt context."
+    - name: flush
+      type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
+      description: "Whether prompt_tools should flush the cache after this gripper-state prompt 
+                    is appended."
+  runtime_parameters:
+    input:
+      - name: joint_names
+        type: string[]
+        semantic_key: prompt.gripper_state.names
+        description: "Ordered gripper joint names."
+      - name: joint_positions
+        type: double[]
+        semantic_key: prompt.gripper_state.positions
+        description: "Ordered gripper joint positions matching joint_names."
+      - name: joint_count
+        type: int
+        semantic_key: prompt.gripper_state.count
+        description: "Number of gripper joints included in the prompt."
+
+relations:
+  - subject: prompt_capabilities/PromptGripperStateRunner
+    predicate: depends_on
+    object: gripper_capabilities/GripperStateRunner

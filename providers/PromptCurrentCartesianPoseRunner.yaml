@@ -1,0 +1,87 @@
+%YAML 1.1
+---
+name: PromptCurrentCartesianPoseRunner
+spec_type: provider
+spec_version: 1.2
+description: "The provider for prompting the current manipulator Cartesian pose through prompt_tools."
+implements: prompt_capabilities/PromptCurrentCartesianPoseRunner
+runner: capabilities2_runner::PromptCurrentCartesianPoseRunner
+
+definition:
+  command: "<Runner interface=prompt_capabilities/PromptCurrentCartesianPoseRunner provider=prompt_capabilities/PromptCurrentCartesianPoseRunner uuid='$uuid' flush='$flush' />"
+  configuration_parameters:
+    - name: uuid
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
+      description: "Prompt cache identifier used to append this Cartesian pose information to 
+                    an existing prompt context."
+    - name: flush
+      type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
+      description: "Whether prompt_tools should flush the cache after this Cartesian pose prompt 
+                    is appended."
+  runtime_parameters:
+    input:
+      - name: x
+        type: double
+        semantic_key: prompt.manipulator_pose.x
+        description: "Resolved Cartesian x position of the manipulator target frame."
+      - name: y
+        type: double
+        semantic_key: prompt.manipulator_pose.y
+        description: "Resolved Cartesian y position of the manipulator target frame."
+      - name: z
+        type: double
+        semantic_key: prompt.manipulator_pose.z
+        description: "Resolved Cartesian z position of the manipulator target frame."
+      - name: qx
+        type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.manipulator_pose.qx
+        description: "Quaternion x component of the manipulator orientation."
+      - name: qy
+        type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.manipulator_pose.qy
+        description: "Quaternion y component of the manipulator orientation."
+      - name: qz
+        type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.manipulator_pose.qz
+        description: "Quaternion z component of the manipulator orientation."
+      - name: qw
+        type: double
+        optional: true
+        default: 1.0
+        semantic_key: prompt.manipulator_pose.qw
+        description: "Quaternion w component of the manipulator orientation."
+      - name: roll
+        type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.manipulator_pose.roll
+        description: "Roll angle in radians derived from the resolved manipulator orientation."
+      - name: pitch
+        type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.manipulator_pose.pitch
+        description: "Pitch angle in radians derived from the resolved manipulator orientation."
+      - name: yaw
+        type: double
+        optional: true
+        default: 0.0
+        semantic_key: prompt.manipulator_pose.yaw
+        description: "Yaw angle in radians derived from the resolved manipulator orientation."
+
+relations:
+  - subject: prompt_capabilities/PromptCurrentCartesianPoseRunner
+    predicate: depends_on
+    object: moveit2_capabilities/CurrentCartesianPoseRunner

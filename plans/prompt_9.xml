@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plan>
+    <Control type="sequential" name="plan_named_pose_pre_grasp">
+        <Runner
+            interface="fabric_capabilities/FabricGeneratePlanRunner"
+            provider="fabric_capabilities/FabricGeneratePlanRunner"
+            task="Generate a plan to move the robot to named pose 'pre_grasp'."
+            flush="true" />
+    </Control>
+</Plan>

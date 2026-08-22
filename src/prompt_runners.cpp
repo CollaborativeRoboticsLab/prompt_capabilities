@@ -1,5 +1,8 @@
 #include <pluginlib/class_list_macros.hpp>
 #include <capabilities2_runner/runner_base.hpp>
+#include <prompt_capabilities/prompt_current_cartesian_pose_runner.hpp>
+#include <prompt_capabilities/prompt_current_joint_pose_runner.hpp>
+#include <prompt_capabilities/prompt_gripper_state_runner.hpp>
 #include <prompt_capabilities/prompt_text_runner.hpp>
 #include <prompt_capabilities/prompt_speech_runner.hpp>
 #include <prompt_capabilities/prompt_pose_runner.hpp>
@@ -8,3 +11,6 @@
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptTextRunner, capabilities2_runner::RunnerBase)
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptSpeechRunner, capabilities2_runner::RunnerBase)
 PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptPoseRunner, capabilities2_runner::RunnerBase)
+PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptCurrentCartesianPoseRunner, capabilities2_runner::RunnerBase)
+PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptCurrentJointPoseRunner, capabilities2_runner::RunnerBase)
+PLUGINLIB_EXPORT_CLASS(capabilities2_runner::PromptGripperStateRunner, capabilities2_runner::RunnerBase)

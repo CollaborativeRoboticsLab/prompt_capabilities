@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plan>
+    <Control type="sequential" name="plan_wrist_rotation">
+        <Runner
+            interface="moveit2_capabilities/CurrentJointPoseRunner"
+            provider="moveit2_capabilities/CurrentJointPoseRunner"
+            timeout_sec="2.0" />
+        <Runner
+            interface="prompt_capabilities/PromptCurrentJointPoseRunner"
+            provider="prompt_capabilities/PromptCurrentJointPoseRunner"
+            uuid="prompt-wrist-rotation"
+            flush="false" />
+        <Runner
+            interface="fabric_capabilities/FabricGeneratePlanRunner"
+            provider="fabric_capabilities/FabricGeneratePlanRunner"
+            task="Given the current manipulator joint pose, generate a plan to move wrist_1 joint by 45 degrees clockwise."
+            uuid="prompt-wrist-rotation"
+            flush="true" />
+    </Control>
+</Plan>

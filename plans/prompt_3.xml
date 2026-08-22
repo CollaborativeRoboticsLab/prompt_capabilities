@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plan>
+    <Control type="sequential" name="prompt_gripper_joint_state">
+        <Runner
+            interface="gripper_capabilities/GripperStateRunner"
+            provider="gripper_capabilities/GripperStateRunner"
+            timeout_sec="2.0" />
+        <Runner
+            interface="prompt_capabilities/PromptGripperStateRunner"
+            provider="prompt_capabilities/PromptGripperStateRunner"
+            flush="true" />
+    </Control>
+</Plan>

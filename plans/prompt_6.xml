@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plan>
+    <Control type="sequential" name="plan_cartesian_offset_move">
+        <Runner
+            interface="moveit2_capabilities/CurrentCartesianPoseRunner"
+            provider="moveit2_capabilities/CurrentCartesianPoseRunner"
+            from_frame="base_link"
+            to_frame="tcp"
+            time_buffer="5.0" />
+        <Runner
+            interface="prompt_capabilities/PromptCurrentCartesianPoseRunner"
+            provider="prompt_capabilities/PromptCurrentCartesianPoseRunner"
+            uuid="prompt-cartesian-backward"
+            flush="false" />
+        <Runner
+            interface="fabric_capabilities/FabricGeneratePlanRunner"
+            provider="fabric_capabilities/FabricGeneratePlanRunner"
+            task="Given the current manipulator Cartesian pose, generate a plan to move the gripper 5 cm backward."
+            uuid="prompt-cartesian-backward"
+            flush="true" />
+    </Control>
+</Plan>

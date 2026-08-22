@@ -1,0 +1,45 @@
+%YAML 1.1
+---
+name: PromptCurrentJointPoseRunner
+spec_type: provider
+spec_version: 1.2
+description: "The provider for prompting the current manipulator joint state through prompt_tools."
+implements: prompt_capabilities/PromptCurrentJointPoseRunner
+runner: capabilities2_runner::PromptCurrentJointPoseRunner
+
+definition:
+  command: "<Runner interface=prompt_capabilities/PromptCurrentJointPoseRunner provider=prompt_capabilities/PromptCurrentJointPoseRunner uuid='$uuid' flush='$flush' />"
+  configuration_parameters:
+    - name: uuid
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
+      description: "Prompt cache identifier used to append this joint-state information 
+                    to an existing prompt context."
+    - name: flush
+      type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
+      description: "Whether prompt_tools should flush the cache after this joint-state prompt 
+                    is appended."
+  runtime_parameters:
+    input:
+      - name: joint_names
+        type: string[]
+        semantic_key: prompt.manipulator_joints.names
+        description: "Ordered manipulator joint names."
+      - name: joint_positions
+        type: double[]
+        semantic_key: prompt.manipulator_joints.positions
+        description: "Ordered manipulator joint positions in radians matching joint_names."
+      - name: joint_count
+        type: int
+        semantic_key: prompt.manipulator_joints.count
+        description: "Number of manipulator joints included in the prompt."
+
+relations:
+  - subject: prompt_capabilities/PromptCurrentJointPoseRunner
+    predicate: depends_on
+    object: moveit2_capabilities/CurrentJointPoseRunner

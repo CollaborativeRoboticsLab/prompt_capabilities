@@ -1,73 +1,42 @@
-# Capabilities2_runner_prompt
+# prompt_capabilities
 
-Provides capabiilites2 runners for PromptTools stack. These are required by the LLM to gather information about the robot or for it to generate a plan for a new task.
+Provides capabilities2 runners that forward robot state and free-form task text into the Prompt Tools stack. These runners are used either to append context to the LLM cache or to pair that context with downstream plan generation.
 
 ## Supported Runners
 
-| Runner                    | Focus  | Description  |
-| ---                       | ---   | ---          |
-| Prompt Capability runner  | Plan Generation | prompts LLM about the capabilities available on the robot |
-| Prompt Plan runner        | Plan Generation  | prompts LLM requesting a new execution plan for a given task |
-| Prompt Speech runner      | Information Gathering | prompts the LLM to generate speech text for downstream synthesis |
-| Prompt Pose runner        | Information Gathering | prompts LLM about the pose of the robot |
-| Prompt Text runner        | Information Gathering | forwards text context to the LLM through the prompt service |
+| Runner | Description |
+| --- | --- |
+| `PromptTextRunner` | Sends free-form text to prompt_tools. |
+| `PromptPoseRunner` | Sends explicit pose fields to prompt_tools. |
+| `PromptCurrentCartesianPoseRunner` | Reads the current manipulator Cartesian pose through `moveit2_capabilities/CurrentCartesianPoseRunner` and prompts it to the LLM. |
+| `PromptCurrentJointPoseRunner` | Reads the current manipulator joint pose through `moveit2_capabilities/CurrentJointPoseRunner` and prompts it to the LLM. |
+| `PromptGripperStateRunner` | Reads the current gripper joint state through `gripper_capabilities/GripperStateRunner` and prompts it to the LLM. |
+| `PromptSpeechRunner` | Prompts the LLM to generate speech text for downstream synthesis. |
 
-For information about these runners' interfaces, please refer to [Interface Information](./docs/interface.md) section.
+For interface details, see [docs/interface.md](./docs/interface.md).
 
-## Examples
+## Example Plans
 
-Examples depend on [CollaborativeRoboticsLab/capabilities2](https://github.com/CollaborativeRoboticsLab/capabilities2) and [CollaborativeRoboticsLab/prompt_tools](https://github.com/CollaborativeRoboticsLab/prompt_tools). Following examples have been tested against turtlebot3 simulation using [CollaborativeRoboticsLab/turtlebot3-docker](https://github.com/CollaborativeRoboticsLab/turtlebot3-docker)
+- [plans/prompt_1.xml](./plans/prompt_1.xml): prompt a supplied pose to the LLM.
+- [plans/prompt_2.xml](./plans/prompt_2.xml): prompt context and generate a plan with a shared UUID.
+- [plans/prompt_3.xml](./plans/prompt_3.xml): get the current gripper joint state and prompt it to the LLM.
+- [plans/prompt_4.xml](./plans/prompt_4.xml): get the current gripper joint state, prompt it, then generate a plan to open the gripper.
+- [plans/prompt_5.xml](./plans/prompt_5.xml): get the current manipulator Cartesian pose and prompt it to the LLM.
+- [plans/prompt_6.xml](./plans/prompt_6.xml): get the current manipulator Cartesian pose, prompt it, then generate a plan to move the gripper 5 cm backward.
+- [plans/prompt_7.xml](./plans/prompt_7.xml): get the current manipulator joint pose and prompt it to the LLM.
+- [plans/prompt_8.xml](./plans/prompt_8.xml): get the current manipulator joint pose, prompt it, then generate a plan to rotate `wrist_1` by 45 degrees clockwise.
+- [plans/prompt_9.xml](./plans/prompt_9.xml): generate a plan to move the robot to named pose `pre_grasp`.
+- [plans/prompt_10.xml](./plans/prompt_10.xml): generate a plan to move through named poses `pre_grasp`, `grasp_pose`, and `post_grasp`.
 
-| Example | Description |
-| ---     | ---         |
-| [prompt_1.xml](./plans/prompt_1.xml) | Implements listening for robot's pose and prompting them to the LLM |  
-| [prompt_2.xml](./plans/prompt_2.xml) | Implements prompting the LLM for a plan for a new task and setting it to Fabric. This example also utilize an externally provided UUID to keep the Prompt Tools side cache consistent accross different runners. |
+Plans that combine a prompt step with `fabric_capabilities/FabricGeneratePlanRunner` use a shared `uuid` so prompt_tools can accumulate the state description before the plan-generation request is sent.
 
-## Setup
-
-Above examples depend on the capabilities2 and prompt_tools packages. You can clone these packages in your workspace and build them using colcon build.
+## Build
 
 ```bash
-cd ~/colcon_ws/src
-git clone https://github.com/CollaborativeRoboticsLab/capabilities2.git
-git clone https://github.com/CollaborativeRoboticsLab/fabric.git
-git clone https://github.com/CollaborativeRoboticsLab/prompt_tools.git
-git clone https://github.com/CollaborativeRoboticsLab/prompt_capabilities.git
-
 cd ~/colcon_ws
-colcon build --symlink-install
+colcon build --packages-up-to prompt_capabilities --symlink-install
 ```
 
-To setup the simulation, you can use the turtlebot3 world in Gazebo. You can launch the simulation using the following command,
+## Runtime
 
-```bash
-git clone https://github.com/CollaborativeRoboticsLab/turtlebot3-docker.git
-cd turtlebot3-docker/docker
-docker compose pull
-xhost +local:root
-docker compose up
-```
-
-## Running the examples
-
-To run the examples, first make sure that the simulation is running and then on seperate terminals run,
-
-```bash
-source install/setup.bash
-ros2 launch capabilities2_server capabilities2_server.launch.py
-```
-
-Replace <your_openai_api_key> with your actual OpenAI API key in the command below.
-
-```bash
-export OPENAI_API_KEY=<your_openai_api_key>
-source install/setup.bash
-ros2 launch prompt_bridge prompt_bridge.launch.py
-```
-
-```bash
-source install/setup.bash
-ros2 launch prompt_capabilities system.launch.py filename:=prompt_1.xml
-```
-
-Change `filename:=prompt_1.xml` to match the correct plan
+Start the capabilities server and the prompt bridge, then run one of the prompt plans through your normal capabilities2 launch flow.
