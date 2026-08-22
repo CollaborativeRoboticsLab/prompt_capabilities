@@ -19,7 +19,7 @@ namespace prompt_detail
  * @param value_suffix Optional suffix appended after each value.
  * @return Human-readable paired description.
  */
-inline std::string describe_named_values(
+inline std::string describe_gripper_named_values(
   const std::vector<std::string> & names,
   const std::vector<double> & values,
   const std::string & value_suffix = "")
@@ -75,7 +75,7 @@ public:
     prompt =
       "The current gripper articulation state contains " + std::to_string(joint_count) +
       " joints. The current gripper joint positions are " +
-      prompt_detail::describe_named_values(joint_names, joint_positions) + ".";
+      prompt_detail::describe_gripper_named_values(joint_names, joint_positions) + ".";
 
     RCLCPP_INFO(node_->get_logger(), "Prompt generated: %s", prompt.c_str());
   }
