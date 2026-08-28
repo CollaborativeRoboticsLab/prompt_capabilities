@@ -10,6 +10,7 @@ Provides capabilities2 runners that forward robot state and free-form task text 
 | `PromptPoseRunner` | Sends explicit pose fields to prompt_tools. |
 | `PromptCurrentCartesianPoseRunner` | Reads the current manipulator Cartesian pose through `moveit2_capabilities/CurrentCartesianPoseRunner` and prompts it to the LLM. |
 | `PromptCurrentJointPoseRunner` | Reads the current manipulator joint pose through `moveit2_capabilities/CurrentJointPoseRunner` and prompts it to the LLM. |
+| `PromptNamedPosesRunner` | Prompts the configured manipulator named poses and their descriptions for downstream reasoning. |
 | `PromptGripperStateRunner` | Reads the current gripper joint state through `gripper_capabilities/GripperStateRunner` and prompts it to the LLM. |
 | `PromptSpeechRunner` | Prompts the LLM to generate speech text for downstream synthesis. |
 
@@ -21,6 +22,7 @@ For interface details, see [docs/interface.md](./docs/interface.md).
 - [plans/prompt_2.xml](./plans/prompt_2.xml): get the current gripper joint state and prompt it to the LLM.
 - [plans/prompt_3.xml](./plans/prompt_3.xml): get the current manipulator Cartesian pose and prompt it to the LLM.
 - [plans/prompt_4.xml](./plans/prompt_4.xml): get the current manipulator joint pose and prompt it to the LLM.
+- [plans/prompt_5.xml](./plans/prompt_5.xml): get the configured manipulator named poses and prompt them to the LLM.
 
 ## Build
 

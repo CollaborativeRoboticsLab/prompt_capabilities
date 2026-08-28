@@ -19,6 +19,11 @@
             A plugin that prompts the current manipulator joint state
         </description>
     </class>
+    <class type="capabilities2_runner::PromptNamedPosesRunner" base_class_type="capabilities2_runner::RunnerBase">
+        <description>
+            A plugin that prompts the configured manipulator named poses and descriptions
+        </description>
+    </class>
     <class type="capabilities2_runner::PromptGripperStateRunner" base_class_type="capabilities2_runner::RunnerBase">
         <description>
             A plugin that prompts the current gripper state

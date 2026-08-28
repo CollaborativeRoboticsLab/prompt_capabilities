@@ -119,6 +119,27 @@ Output Parameters:
 
 None
 
+## PromptNamedPosesRunner
+
+Input Parameters:
+
+| Parameter Name    | Type   | Description |
+| ---               | ---    | ---         |
+| uuid              | string | Optional prompt-cache uuid used to append the named-pose catalog into an existing prompt context. |
+| flush             | bool   | Whether to flush the accumulated prompt cache after this named-pose catalog is appended. |
+
+Runtime Input From Upstream Capability:
+
+| Parameter Name    | Type   | Description |
+| ---               | ---    | ---         |
+| pose_names        | string[] | Ordered configured named-pose identifiers. |
+| descriptions      | string[] | Ordered descriptions matching `pose_names`. |
+| pose_count        | int    | Number of configured named poses included in the prompt. |
+
+Output Parameters:
+
+None
+
 ## PromptGripperStateRunner
 
 Input Parameters:

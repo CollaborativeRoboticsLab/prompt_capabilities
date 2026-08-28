@@ -1,0 +1,43 @@
+%YAML 1.1
+---
+name: PromptNamedPosesRunner
+spec_type: provider
+spec_version: 1.2
+description: "The provider for prompting configured manipulator named poses through prompt_tools."
+implements: prompt_capabilities/PromptNamedPosesRunner
+runner: capabilities2_runner::PromptNamedPosesRunner
+
+definition:
+  command: "<Runner interface=prompt_capabilities/PromptNamedPosesRunner provider=prompt_capabilities/PromptNamedPosesRunner uuid='$uuid' flush='$flush' />"
+  configuration_parameters:
+    - name: uuid
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
+      description: "Prompt cache identifier used to append this named-pose catalog to an existing prompt context."
+    - name: flush
+      type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
+      description: "Whether prompt_tools should flush the cache after this named-pose catalog prompt is appended."
+  runtime_parameters:
+    input:
+      - name: pose_names
+        type: string[]
+        semantic_key: prompt.named_poses.names
+        description: "Ordered configured named-pose identifiers."
+      - name: descriptions
+        type: string[]
+        semantic_key: prompt.named_poses.descriptions
+        description: "Ordered descriptions matching pose_names."
+      - name: pose_count
+        type: int
+        semantic_key: prompt.named_poses.count
+        description: "Number of configured named poses included in the prompt."
+
+relations:
+  - subject: prompt_capabilities/PromptNamedPosesRunner
+    predicate: depends_on
+    object: grasping_capabilities/ListNamedPosesRunner

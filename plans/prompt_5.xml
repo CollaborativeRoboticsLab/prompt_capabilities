@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plan>
+    <Control type="sequential" name="prompt_named_poses">
+        <Runner
+            interface="grasping_capabilities/ListNamedPosesRunner"
+            provider="grasping_capabilities/ListNamedPosesRunner" />
+        <Runner
+            interface="prompt_capabilities/PromptNamedPosesRunner"
+            provider="prompt_capabilities/PromptNamedPosesRunner"
+            flush="true" />
+    </Control>
+</Plan>

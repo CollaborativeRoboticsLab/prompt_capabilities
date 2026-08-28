@@ -74,6 +74,15 @@
       providers/PromptCurrentJointPoseRunner.yaml
     </capability_provider>
 
+    <!-- PromptNamedPosesRunner -->
+    <capability_interface>
+      interfaces/PromptNamedPosesRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptNamedPosesRunner.yaml
+    </capability_provider>
+
     <!-- PromptGripperStateRunner -->
     <capability_interface>
       interfaces/PromptGripperStateRunner.yaml

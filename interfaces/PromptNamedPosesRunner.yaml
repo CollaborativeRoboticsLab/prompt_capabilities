@@ -1,0 +1,12 @@
+%YAML 1.1
+---
+name: PromptNamedPosesRunner
+spec_version: 1.2
+spec_type: interface
+description: "This capability prompts the configured manipulator named poses and their descriptions
+              for downstream reasoning."
+interface:
+  services:
+    "/prompt/prompt":
+      type: "prompt_msgs::srv::Prompt"
+      description: "Prompt tools service used to cache or return a prompt describing the configured named poses."
