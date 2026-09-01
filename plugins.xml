@@ -29,6 +29,16 @@
             A plugin that prompts the current gripper state
         </description>
     </class>
+    <class type="capabilities2_runner::PromptDetectionRunner" base_class_type="capabilities2_runner::RunnerBase">
+        <description>
+            A plugin that prompts over YOLO detections and returns one selected detection for grasp filtering
+        </description>
+    </class>
+    <class type="capabilities2_runner::PromptGraspSelectorRunner" base_class_type="capabilities2_runner::RunnerBase">
+        <description>
+            A plugin that prompts over AnyGrasp candidates and returns one selected grasp index
+        </description>
+    </class>
     <class type="capabilities2_runner::PromptTextRunner" base_class_type="capabilities2_runner::RunnerBase">
         <description>
             A plugin that provide text prompting capability

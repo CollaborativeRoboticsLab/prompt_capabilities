@@ -12,6 +12,8 @@ Provides capabilities2 runners that forward robot state and free-form task text 
 | `PromptCurrentJointPoseRunner` | Reads the current manipulator joint pose through `moveit2_capabilities/CurrentJointPoseRunner` and prompts it to the LLM. |
 | `PromptNamedPosesRunner` | Prompts the configured manipulator named poses and their descriptions for downstream reasoning. |
 | `PromptGripperStateRunner` | Reads the current gripper joint state through `gripper_capabilities/GripperStateRunner` and prompts it to the LLM. |
+| `PromptDetectionRunner` | Prompts over upstream YOLO detections and emits one selected detection for downstream bbox-guided grasp filtering. |
+| `PromptGraspSelectorRunner` | Prompts over upstream AnyGrasp candidates and emits one selected grasp index while preserving the candidate arrays. |
 | `PromptSpeechRunner` | Prompts the LLM to generate speech text for downstream synthesis. |
 
 For interface details, see [docs/interface.md](./docs/interface.md).

@@ -94,11 +94,49 @@ protected:
 
   virtual void process_response(typename prompt_msgs::srv::Prompt::Response::SharedPtr response) override
   {
+    prompt_uuid_ = response->uuid;
+    prompt_response_ = response->response.response;
+    prompt_buffered_ = response->response.buffered;
+    prompt_success_ = response->response.success;
+    prompt_accuracy_ = response->response.accuracy;
+    prompt_confidence_ = response->response.confidence;
+    prompt_risk_ = response->response.risk;
+
     if (response->response.buffered)
       RCLCPP_INFO(node_->get_logger(), "information buffered with uuid %s", response->uuid.c_str());
     else
       RCLCPP_INFO(node_->get_logger(), "response received : %s", response->response.response.c_str());
   }
+
+  virtual capabilities2_events::EventParameters param_on_success() override
+  {
+    capabilities2_events::EventParameters parameters;
+    parameters.set_value("uuid", prompt_uuid_, capabilities2_events::OptionType::STRING);
+    parameters.set_value("response", prompt_response_, capabilities2_events::OptionType::STRING);
+    parameters.set_value("buffered", prompt_buffered_, capabilities2_events::OptionType::BOOL);
+    parameters.set_value("success", prompt_success_, capabilities2_events::OptionType::BOOL);
+    parameters.set_value("accuracy", prompt_accuracy_, capabilities2_events::OptionType::DOUBLE);
+    parameters.set_value("confidence", prompt_confidence_, capabilities2_events::OptionType::DOUBLE);
+    parameters.set_value("risk", prompt_risk_, capabilities2_events::OptionType::DOUBLE);
+    return parameters;
+  }
+
+  virtual capabilities2_events::EventParameters param_on_failure() override
+  {
+    capabilities2_events::EventParameters parameters;
+    parameters.set_value(
+      "message", std::string("Prompt service call failed."), capabilities2_events::OptionType::STRING);
+    return parameters;
+  }
+
+protected:
+  std::string prompt_uuid_;
+  std::string prompt_response_;
+  bool prompt_buffered_{false};
+  bool prompt_success_{false};
+  double prompt_accuracy_{0.0};
+  double prompt_confidence_{0.0};
+  double prompt_risk_{0.0};
 };
 
 }  // namespace capabilities2_runner

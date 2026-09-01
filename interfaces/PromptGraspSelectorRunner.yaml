@@ -1,0 +1,7 @@
+%YAML 1.1
+---
+name: PromptGraspSelectorRunner
+spec_version: 1.2
+spec_type: interface
+description: "This capability prompts over upstream AnyGrasp candidates and returns
+              one selected grasp index for downstream pose selection."

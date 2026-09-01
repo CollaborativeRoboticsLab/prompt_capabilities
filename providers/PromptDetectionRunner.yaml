@@ -1,0 +1,133 @@
+%YAML 1.1
+---
+name: PromptDetectionRunner
+spec_type: provider
+spec_version: 1.2
+description: "The provider for selecting one YOLO detection through prompt_tools and emitting the downstream bbox fields."
+implements: prompt_capabilities/PromptDetectionRunner
+runner: capabilities2_runner::PromptDetectionRunner
+
+definition:
+  command: "<Runner interface=prompt_capabilities/PromptDetectionRunner provider=prompt_capabilities/PromptDetectionRunner target_object='$target_object' uuid='$uuid' flush='$flush' />"
+  configuration_parameters:
+    - name: target_object
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.detection.target_object
+      description: "Task-level object description used by the LLM to choose among detections."
+    - name: uuid
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
+      description: "Optional prompt cache uuid."
+    - name: flush
+      type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
+      description: "Whether to flush prompt cache for this request."
+  runtime_parameters:
+    input:
+      - name: frame_id
+        type: string
+        semantic_key: yolo.response.frame_id
+        description: "Detection frame id from the upstream YOLO latest-detections runner."
+      - name: image_width
+        type: int
+        semantic_key: yolo.response.image_width
+        description: "Image width from the upstream YOLO latest-detections runner."
+      - name: image_height
+        type: int
+        semantic_key: yolo.response.image_height
+        description: "Image height from the upstream YOLO latest-detections runner."
+      - name: detection_ids
+        type: int[]
+        semantic_key: yolo.response.detection_ids
+        description: "Per-response detection identifiers aligned with the bounding boxes."
+      - name: class_id
+        type: int[]
+        semantic_key: yolo.response.class_id
+        description: "Detected class ids aligned with detection_ids."
+      - name: class_name
+        type: string[]
+        semantic_key: yolo.response.class_name
+        description: "Detected class names aligned with detection_ids."
+      - name: confidence
+        type: double[]
+        semantic_key: yolo.response.confidence
+        description: "Detection confidences aligned with detection_ids."
+      - name: bbx_center_x
+        type: int[]
+        semantic_key: yolo.response.bbx_center_x
+        description: "Bounding-box center x coordinates aligned with detection_ids."
+      - name: bbx_center_y
+        type: int[]
+        semantic_key: yolo.response.bbx_center_y
+        description: "Bounding-box center y coordinates aligned with detection_ids."
+      - name: bbx_size_w
+        type: int[]
+        semantic_key: yolo.response.bbx_size_w
+        description: "Bounding-box widths aligned with detection_ids."
+      - name: bbx_size_h
+        type: int[]
+        semantic_key: yolo.response.bbx_size_h
+        description: "Bounding-box heights aligned with detection_ids."
+    output:
+      - name: uuid
+        type: string
+        semantic_key: prompt.cache.uuid
+        description: "Prompt uuid returned by prompt_tools."
+      - name: response
+        type: string
+        semantic_key: prompt.response.text
+        description: "Raw prompt response text from the LLM."
+      - name: selected_detection_index
+        type: int
+        semantic_key: prompt.detection.selected_index
+        description: "Zero-based detection index selected by the LLM."
+      - name: detection_id
+        type: int
+        semantic_key: anygrasp.request.detection_id
+        description: "Selected detection identifier for downstream filtered-grasps requests."
+      - name: class_id
+        type: int
+        semantic_key: anygrasp.request.class_id
+        description: "Selected class id for downstream filtered-grasps requests."
+      - name: class_name
+        type: string
+        semantic_key: anygrasp.request.class_name
+        description: "Selected class name for downstream filtered-grasps requests."
+      - name: bbx_center_x
+        type: int
+        semantic_key: anygrasp.request.bbx_center_x
+        description: "Selected bounding-box center x in image pixels."
+      - name: bbx_center_y
+        type: int
+        semantic_key: anygrasp.request.bbx_center_y
+        description: "Selected bounding-box center y in image pixels."
+      - name: bbx_size_w
+        type: int
+        semantic_key: anygrasp.request.bbx_size_w
+        description: "Selected bounding-box width in image pixels."
+      - name: bbx_size_h
+        type: int
+        semantic_key: anygrasp.request.bbx_size_h
+        description: "Selected bounding-box height in image pixels."
+      - name: image_width
+        type: int
+        semantic_key: anygrasp.request.image_width
+        description: "Forwarded image width for the selected detection."
+      - name: image_height
+        type: int
+        semantic_key: anygrasp.request.image_height
+        description: "Forwarded image height for the selected detection."
+      - name: selection_reason
+        type: string
+        semantic_key: prompt.detection.selection_reason
+        description: "Short explanation returned by the LLM for the selected detection."
+      - name: message
+        type: string
+        semantic_key: prompt.detection.message
+        description: "Failure message when prompt-based detection selection fails."

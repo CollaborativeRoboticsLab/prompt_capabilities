@@ -14,6 +14,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(pluginlib REQUIRED)
+find_package(nlohmann_json REQUIRED)
 find_package(prompt_msgs REQUIRED)
 find_package(capabilities2_msgs REQUIRED)
 find_package(capabilities2_runner REQUIRED)
@@ -35,6 +36,10 @@ ament_target_dependencies(${PROJECT_NAME}
   capabilities2_msgs
   capabilities2_runner
   capabilities2_events
+)
+
+target_link_libraries(${PROJECT_NAME}
+  nlohmann_json::nlohmann_json
 )
 
 pluginlib_export_plugin_description_file(capabilities2_runner plugins.xml)

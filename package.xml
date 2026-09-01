@@ -18,6 +18,7 @@
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
   <depend>pluginlib</depend>
+  <depend>nlohmann-json-dev</depend>
   <depend>prompt_msgs</depend>
   <depend>capabilities2_msgs</depend>
   <depend>capabilities2_runner</depend>
@@ -90,6 +91,24 @@
 
     <capability_provider>
       providers/PromptGripperStateRunner.yaml
+    </capability_provider>
+
+    <!-- PromptDetectionRunner -->
+    <capability_interface>
+      interfaces/PromptDetectionRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptDetectionRunner.yaml
+    </capability_provider>
+
+    <!-- PromptGraspSelectorRunner -->
+    <capability_interface>
+      interfaces/PromptGraspSelectorRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/PromptGraspSelectorRunner.yaml
     </capability_provider>
 
     <!-- PromptSpeechRunner -->

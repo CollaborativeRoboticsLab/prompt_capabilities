@@ -1,0 +1,117 @@
+%YAML 1.1
+---
+name: PromptGraspSelectorRunner
+spec_type: provider
+spec_version: 1.2
+description: "The provider for selecting one AnyGrasp candidate through prompt_tools while preserving the grasp arrays for downstream adapters."
+implements: prompt_capabilities/PromptGraspSelectorRunner
+runner: capabilities2_runner::PromptGraspSelectorRunner
+
+definition:
+  command: "<Runner interface=prompt_capabilities/PromptGraspSelectorRunner provider=prompt_capabilities/PromptGraspSelectorRunner task_hint='$task_hint' uuid='$uuid' flush='$flush' />"
+  configuration_parameters:
+    - name: task_hint
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.grasp.task_hint
+      description: "Optional task-level guidance used by the LLM to choose among grasp candidates."
+    - name: uuid
+      type: string
+      optional: true
+      default: ""
+      semantic_key: prompt.cache.uuid
+      description: "Optional prompt cache uuid."
+    - name: flush
+      type: boolean
+      optional: true
+      default: false
+      semantic_key: prompt.cache.flush
+      description: "Whether to flush prompt cache for this request."
+  runtime_parameters:
+    input:
+      - name: frame_ids
+        type: string[]
+        semantic_key: anygrasp.response.frame_ids
+        description: "Frame ids for the filtered grasp candidates."
+      - name: positions_x
+        type: double[]
+        semantic_key: anygrasp.response.positions_x
+        description: "X positions for the filtered grasp candidates."
+      - name: positions_y
+        type: double[]
+        semantic_key: anygrasp.response.positions_y
+        description: "Y positions for the filtered grasp candidates."
+      - name: positions_z
+        type: double[]
+        semantic_key: anygrasp.response.positions_z
+        description: "Z positions for the filtered grasp candidates."
+      - name: orientations_x
+        type: double[]
+        semantic_key: anygrasp.response.orientations_x
+        description: "Quaternion x values for the filtered grasp candidates."
+      - name: orientations_y
+        type: double[]
+        semantic_key: anygrasp.response.orientations_y
+        description: "Quaternion y values for the filtered grasp candidates."
+      - name: orientations_z
+        type: double[]
+        semantic_key: anygrasp.response.orientations_z
+        description: "Quaternion z values for the filtered grasp candidates."
+      - name: orientations_w
+        type: double[]
+        semantic_key: anygrasp.response.orientations_w
+        description: "Quaternion w values for the filtered grasp candidates."
+    output:
+      - name: uuid
+        type: string
+        semantic_key: prompt.cache.uuid
+        description: "Prompt uuid returned by prompt_tools."
+      - name: response
+        type: string
+        semantic_key: prompt.response.text
+        description: "Raw prompt response text from the LLM."
+      - name: selected_grasp_index
+        type: int
+        semantic_key: anygrasp.selection.selected_grasp_index
+        description: "Zero-based grasp index selected by the LLM."
+      - name: selection_reason
+        type: string
+        semantic_key: prompt.grasp.selection_reason
+        description: "Short explanation returned by the LLM for the selected grasp."
+      - name: frame_ids
+        type: string[]
+        semantic_key: anygrasp.response.frame_ids
+        description: "Pass-through frame ids for downstream pose selection."
+      - name: positions_x
+        type: double[]
+        semantic_key: anygrasp.response.positions_x
+        description: "Pass-through X positions for downstream pose selection."
+      - name: positions_y
+        type: double[]
+        semantic_key: anygrasp.response.positions_y
+        description: "Pass-through Y positions for downstream pose selection."
+      - name: positions_z
+        type: double[]
+        semantic_key: anygrasp.response.positions_z
+        description: "Pass-through Z positions for downstream pose selection."
+      - name: orientations_x
+        type: double[]
+        semantic_key: anygrasp.response.orientations_x
+        description: "Pass-through quaternion x values for downstream pose selection."
+      - name: orientations_y
+        type: double[]
+        semantic_key: anygrasp.response.orientations_y
+        description: "Pass-through quaternion y values for downstream pose selection."
+      - name: orientations_z
+        type: double[]
+        semantic_key: anygrasp.response.orientations_z
+        description: "Pass-through quaternion z values for downstream pose selection."
+      - name: orientations_w
+        type: double[]
+        semantic_key: anygrasp.response.orientations_w
+        description: "Pass-through quaternion w values for downstream pose selection."
+      - name: message
+        type: string
+        semantic_key: prompt.grasp.message
+        description: "Failure message when prompt-based grasp selection fails."
