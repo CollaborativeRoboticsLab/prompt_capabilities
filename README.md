@@ -35,4 +35,12 @@ colcon build --packages-up-to prompt_capabilities --symlink-install
 
 ## Runtime
 
-Start the capabilities server and the prompt bridge, then run one of the prompt-only plans through your normal capabilities2 launch flow.
+Run one of the prompt-only plans through the packaged wrapper launch:
+
+```bash
+export OPENAI_API_KEY=<your_openai_api_key>
+source install/setup.bash
+ros2 launch prompt_capabilities system.launch.py filename:=prompt_1.xml
+```
+
+The wrapper starts Fabric, Capabilities2, and prompt tools automatically. Add `start_prompt_tools:=false` when you want to exclude `prompt_bridge`, and `start_experience_stack:=true` when you also want Experience and Supervisor in the same launch graph.
