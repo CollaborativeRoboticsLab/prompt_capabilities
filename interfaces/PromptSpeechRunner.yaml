@@ -6,7 +6,7 @@ spec_type: interface
 description: "This capability can be used to generate human like speech text for a given
               text that should be spoken aloud and exposes the returned text to downstream 
               capabilities. This can be used after any prompt capability to flush the current 
-              context and get a speech response when the robot is expected to speak. 
+              context and get a speech response when the robot is expected to speak."
 interface:
   services:
     "/prompt/prompt":
