@@ -82,6 +82,7 @@ public:
     if (prompt_buffered_)
     {
       status_message_ = "PromptGraspSelectorRunner received a buffered prompt response; a final selection is required.";
+      log_failure();
       return;
     }
 
@@ -94,13 +95,22 @@ public:
     catch (const std::exception & error)
     {
       status_message_ = std::string("Failed to parse PromptGraspSelectorRunner JSON response: ") + error.what();
+      log_failure();
       return;
     }
 
     if (!validate_selection())
     {
+      log_failure();
       return;
     }
+
+    RCLCPP_INFO(
+      node_->get_logger(),
+      "PromptGraspSelectorRunner selected grasp index=%d pose_count=%zu selection_reason='%s'",
+      selected_grasp_index_,
+      frame_ids_.size(),
+      selection_reason_.c_str());
   }
 
   /**
@@ -134,6 +144,16 @@ public:
     capabilities2_events::EventParameters parameters = PromptServiceRunner::param_on_failure();
     parameters.set_value("message", status_message_, capabilities2_events::OptionType::STRING);
     return parameters;
+  }
+
+  virtual bool prompt_uses_cache() const override
+  {
+    return false;
+  }
+
+  virtual bool response_is_success() const override
+  {
+    return PromptServiceRunner::response_is_success() && status_message_.empty();
   }
 
 private:
@@ -189,6 +209,25 @@ private:
     }
 
     return true;
+  }
+
+  void log_failure() const
+  {
+    RCLCPP_WARN(
+      node_->get_logger(),
+      "PromptGraspSelectorRunner failed: %s pose_count=%zu selected_grasp_index=%d response='%s' frame_ids=%zu positions_x=%zu positions_y=%zu positions_z=%zu orientations_x=%zu orientations_y=%zu orientations_z=%zu orientations_w=%zu",
+      status_message_.c_str(),
+      frame_ids_.size(),
+      selected_grasp_index_,
+      prompt_response_.c_str(),
+      frame_ids_.size(),
+      positions_x_.size(),
+      positions_y_.size(),
+      positions_z_.size(),
+      orientations_x_.size(),
+      orientations_y_.size(),
+      orientations_z_.size(),
+      orientations_w_.size());
   }
 
   std::string task_hint_;

@@ -98,6 +98,7 @@ public:
     if (prompt_buffered_)
     {
       status_message_ = "PromptDetectionRunner received a buffered prompt response; a final selection is required.";
+      log_failure();
       return;
     }
 
@@ -110,11 +111,13 @@ public:
     catch (const std::exception & error)
     {
       status_message_ = std::string("Failed to parse PromptDetectionRunner JSON response: ") + error.what();
+      log_failure();
       return;
     }
 
     if (!validate_selection())
     {
+      log_failure();
       return;
     }
 
@@ -125,6 +128,15 @@ public:
     selected_bbx_center_y_ = bbx_center_y_.at(selected_detection_index_);
     selected_bbx_size_w_ = bbx_size_w_.at(selected_detection_index_);
     selected_bbx_size_h_ = bbx_size_h_.at(selected_detection_index_);
+
+    RCLCPP_INFO(
+      node_->get_logger(),
+      "PromptDetectionRunner selected detection index=%d detection_id=%d class_name='%s' detection_count=%zu selection_reason='%s'",
+      selected_detection_index_,
+      selected_detection_id_,
+      selected_class_name_.c_str(),
+      detection_ids_.size(),
+      selection_reason_.c_str());
   }
 
   /**
@@ -159,6 +171,16 @@ public:
     capabilities2_events::EventParameters parameters = PromptServiceRunner::param_on_failure();
     parameters.set_value("message", status_message_, capabilities2_events::OptionType::STRING);
     return parameters;
+  }
+
+  virtual bool prompt_uses_cache() const override
+  {
+    return false;
+  }
+
+  virtual bool response_is_success() const override
+  {
+    return PromptServiceRunner::response_is_success() && status_message_.empty();
   }
 
 private:
@@ -214,6 +236,25 @@ private:
     }
 
     return true;
+  }
+
+  void log_failure() const
+  {
+    RCLCPP_WARN(
+      node_->get_logger(),
+      "PromptDetectionRunner failed: %s detection_count=%zu selected_detection_index=%d response='%s' frame_id='%s' class_ids=%zu class_names=%zu confidences=%zu bbx_center_x=%zu bbx_center_y=%zu bbx_size_w=%zu bbx_size_h=%zu",
+      status_message_.c_str(),
+      detection_ids_.size(),
+      selected_detection_index_,
+      prompt_response_.c_str(),
+      frame_id_.c_str(),
+      class_ids_.size(),
+      class_names_.size(),
+      confidences_.size(),
+      bbx_center_x_.size(),
+      bbx_center_y_.size(),
+      bbx_size_w_.size(),
+      bbx_size_h_.size());
   }
 
   /**

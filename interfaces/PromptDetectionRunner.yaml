@@ -3,5 +3,5 @@
 name: PromptDetectionRunner
 spec_version: 1.2
 spec_type: interface
-description: "This capability prompts over upstream YOLO detections and returns one
-              selected detection for downstream grasp filtering."
+description: "This capability prompts over upstream YOLO detections and returns
+              one selected detection for downstream grasp filtering."

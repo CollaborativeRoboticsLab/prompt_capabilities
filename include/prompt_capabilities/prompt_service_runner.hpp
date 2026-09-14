@@ -53,18 +53,21 @@ protected:
     bool flush = std::any_cast<bool>(parameters.get_value("flush", false));
     RCLCPP_INFO(node_->get_logger(), "Generating prompt request with flush option: %s", flush ? "true" : "false");
 
+    const bool use_cache = prompt_uses_cache();
+    RCLCPP_INFO(node_->get_logger(), "Generating prompt request with cache option: %s", use_cache ? "true" : "false");
+
     std::string uuid = std::any_cast<std::string>(parameters.get_value("uuid", std::string{}));
     RCLCPP_INFO(node_->get_logger(), "Generating prompt request with uuid: %s", uuid.c_str());
 
     prompt_msgs::srv::Prompt::Request request;
 
-    if (!uuid.empty())
+    if (use_cache && !uuid.empty())
       request.uuid = uuid;
     
     request.prompt.model_family = "openai";
-    request.prompt.use_cache = true;
+    request.prompt.use_cache = use_cache;
     request.prompt.use_chat_mode = false;
-    request.prompt.flush_cache = flush;
+    request.prompt.flush_cache = use_cache && flush;
 
     prompt_msgs::msg::ModelOption modelOption1;
     modelOption1.key = "model";
@@ -91,6 +94,11 @@ protected:
    * @return std::string
    */
   virtual void generate_prompt(capabilities2_events::EventParameters& parameters, std::string& prompt) = 0;
+
+  virtual bool prompt_uses_cache() const
+  {
+    return true;
+  }
 
   virtual void process_response(typename prompt_msgs::srv::Prompt::Response::SharedPtr response) override
   {
@@ -127,6 +135,11 @@ protected:
     parameters.set_value(
       "message", std::string("Prompt service call failed."), capabilities2_events::OptionType::STRING);
     return parameters;
+  }
+
+  virtual bool response_is_success() const override
+  {
+    return prompt_success_ && !prompt_buffered_;
   }
 
 protected:

@@ -3,7 +3,7 @@
 name: PromptDetectionRunner
 spec_type: provider
 spec_version: 1.2
-description: "The provider for selecting one YOLO detection through prompt_tools and emitting the downstream bbox fields."
+description: "The provider for selecting one YOLO detection through prompt_tools while preserving the selected detection fields for downstream grasp filtering."
 implements: prompt_capabilities/PromptDetectionRunner
 runner: capabilities2_runner::PromptDetectionRunner
 
@@ -15,7 +15,7 @@ definition:
       optional: true
       default: ""
       semantic_key: prompt.detection.target_object
-      description: "Task-level object description used by the LLM to choose among detections."
+      description: "Optional object description used by the LLM to choose among detections."
     - name: uuid
       type: string
       optional: true
@@ -33,19 +33,19 @@ definition:
       - name: frame_id
         type: string
         semantic_key: yolo.response.frame_id
-        description: "Detection frame id from the upstream YOLO latest-detections runner."
+        description: "Detection frame id."
       - name: image_width
         type: int
         semantic_key: yolo.response.image_width
-        description: "Image width from the upstream YOLO latest-detections runner."
+        description: "Image width from the upstream YOLO detection result."
       - name: image_height
         type: int
         semantic_key: yolo.response.image_height
-        description: "Image height from the upstream YOLO latest-detections runner."
+        description: "Image height from the upstream YOLO detection result."
       - name: detection_ids
         type: int[]
         semantic_key: yolo.response.detection_ids
-        description: "Per-response detection identifiers aligned with the bounding boxes."
+        description: "Detection identifiers aligned with the detection arrays."
       - name: class_id
         type: int[]
         semantic_key: yolo.response.class_id
@@ -85,48 +85,48 @@ definition:
         description: "Raw prompt response text from the LLM."
       - name: selected_detection_index
         type: int
-        semantic_key: prompt.detection.selected_index
+        semantic_key: yolo.selection.selected_detection_index
         description: "Zero-based detection index selected by the LLM."
       - name: detection_id
         type: int
-        semantic_key: anygrasp.request.detection_id
-        description: "Selected detection identifier for downstream filtered-grasps requests."
+        semantic_key: yolo.selection.detection_id
+        description: "Selected detection id for downstream filtered-grasps requests."
       - name: class_id
         type: int
-        semantic_key: anygrasp.request.class_id
-        description: "Selected class id for downstream filtered-grasps requests."
+        semantic_key: yolo.selection.class_id
+        description: "Selected detection class id."
       - name: class_name
         type: string
-        semantic_key: anygrasp.request.class_name
-        description: "Selected class name for downstream filtered-grasps requests."
+        semantic_key: yolo.selection.class_name
+        description: "Selected detection class name."
       - name: bbx_center_x
         type: int
-        semantic_key: anygrasp.request.bbx_center_x
-        description: "Selected bounding-box center x in image pixels."
+        semantic_key: yolo.selection.bbx_center_x
+        description: "Selected bounding-box center x."
       - name: bbx_center_y
         type: int
-        semantic_key: anygrasp.request.bbx_center_y
-        description: "Selected bounding-box center y in image pixels."
+        semantic_key: yolo.selection.bbx_center_y
+        description: "Selected bounding-box center y."
       - name: bbx_size_w
         type: int
-        semantic_key: anygrasp.request.bbx_size_w
-        description: "Selected bounding-box width in image pixels."
+        semantic_key: yolo.selection.bbx_size_w
+        description: "Selected bounding-box width."
       - name: bbx_size_h
         type: int
-        semantic_key: anygrasp.request.bbx_size_h
-        description: "Selected bounding-box height in image pixels."
+        semantic_key: yolo.selection.bbx_size_h
+        description: "Selected bounding-box height."
       - name: image_width
         type: int
-        semantic_key: anygrasp.request.image_width
-        description: "Forwarded image width for the selected detection."
+        semantic_key: yolo.response.image_width
+        description: "Forwarded image width."
       - name: image_height
         type: int
-        semantic_key: anygrasp.request.image_height
-        description: "Forwarded image height for the selected detection."
+        semantic_key: yolo.response.image_height
+        description: "Forwarded image height."
       - name: selection_reason
         type: string
         semantic_key: prompt.detection.selection_reason
-        description: "Short explanation returned by the LLM for the selected detection."
+        description: "Short explanation returned by the LLM."
       - name: message
         type: string
         semantic_key: prompt.detection.message
