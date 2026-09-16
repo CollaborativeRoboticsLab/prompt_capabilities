@@ -45,6 +45,11 @@ public:
 
     RCLCPP_INFO(node_->get_logger(), "Prompt generated: %s", prompt.c_str());
   }
+
+  virtual bool prompt_uses_cache() const override
+  {
+    return false;
+  }
 };
 
 }  // namespace capabilities2_runner
