@@ -1,7 +1,0 @@
-%YAML 1.1
----
-name: PromptLaunchRunner
-spec_version: 1.2
-spec_type: interface
-description: "This capability launches the prompt tools stack and is a core dependency 
-              for other capabilities that use prompting functionalities."
