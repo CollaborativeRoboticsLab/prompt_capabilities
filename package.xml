@@ -30,15 +30,6 @@
   <export>
     <build_type>ament_cmake</build_type>
 
-    <!-- PromptLaunchRunner -->
-    <!-- <capability_interface>
-      interfaces/PromptLaunchRunner.yaml
-    </capability_interface> -->
-
-    <!-- <capability_provider>
-      providers/PromptLaunchRunner.yaml
-    </capability_provider> -->
-
     <!-- PromptTextRunner -->
     <capability_interface>
       interfaces/PromptTextRunner.yaml
