@@ -52,6 +52,8 @@ None
 
 ## PromptPoseRunner
 
+With `flush=false`, the pose is buffered under the supplied UUID. If no UUID is supplied, the prompt bridge generates one. A buffered response advances the plan and passes its UUID to the next runner.
+
 Input Parameters:
 
 | Parameter Name    | Type   | Description |
@@ -68,7 +70,11 @@ Input Parameters:
 
 Output Parameters:
 
-None
+| Parameter Name | Type | Description |
+| --- | --- | --- |
+| uuid | string | UUID returned by the prompt bridge for the cached context. |
+| buffered | bool | Whether the pose was buffered without a model response. |
+| success | bool | Whether the prompt bridge reports a successful model response. |
 
 ## PromptCurrentCartesianPoseRunner
 

@@ -74,4 +74,20 @@ install(DIRECTORY plans
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_prompt_pose_runner test/test_prompt_pose_runner.cpp)
+  if(TARGET test_prompt_pose_runner)
+    ament_target_dependencies(test_prompt_pose_runner
+      rclcpp
+      rclcpp_action
+      pluginlib
+      prompt_msgs
+      capabilities2_msgs
+      capabilities2_runner
+      capabilities2_events
+    )
+  endif()
+endif()
+
 ament_package()

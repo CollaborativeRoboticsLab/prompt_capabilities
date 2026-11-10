@@ -46,9 +46,9 @@ public:
     RCLCPP_INFO(node_->get_logger(), "Prompt generated: %s", prompt.c_str());
   }
 
-  virtual bool prompt_uses_cache() const override
+  virtual bool response_is_success() const override
   {
-    return false;
+    return (prompt_buffered_ && !prompt_uuid_.empty()) || PromptServiceRunner::response_is_success();
   }
 };
 
