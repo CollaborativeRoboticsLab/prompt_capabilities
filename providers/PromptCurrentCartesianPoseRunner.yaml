@@ -84,4 +84,4 @@ definition:
 relations:
   - subject: prompt_capabilities/PromptCurrentCartesianPoseRunner
     predicate: depends_on
-    object: moveit2_capabilities/CurrentCartesianPoseRunner
+    object: grasping_capabilities/CurrentCartesianPoseRunner

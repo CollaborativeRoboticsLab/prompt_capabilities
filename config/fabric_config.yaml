@@ -1,0 +1,49 @@
+/**:
+  ros__parameters:
+    use_sim_time: false
+    plan_file_path: ""
+    bond:
+      topic: "/capabilities/bond"
+      connect_timeout_sec: 10.0
+      heartbeat_timeout_sec: 10.0
+      heartbeat_period_sec: 0.1
+    capability_client:
+      service_wait_timeout_sec: -1
+      services:
+        get_interfaces: "/capabilities/get_interfaces"
+        get_semantic_interfaces: "/capabilities/get_semantic_interfaces"
+        get_event_snapshot: "/capabilities/get_event_snapshot"
+        get_providers: "/capabilities/get_providers"
+        get_runnable_specs: "/capabilities/get_runnable_specs"
+        establish_bond: "/capabilities/establish_bond"
+        use_capability: "/capabilities/use_capability"
+        free_capability: "/capabilities/free_capability"
+        trigger_capability: "/capabilities/trigger_capability"
+        connect_capability: "/capabilities/connect_capability"
+        ready: "/capabilities/ready"
+    validation_plugins:
+      - "fabric::CompatibilityValidation"
+      - "fabric::ParameterValidation"
+    parsing_plugin: "fabric::XMLParser"
+    llm_analysis_plugin: "fabric::PromptToolsLlmAnalysis"
+    generation_plugin: "fabric::PromptToolsGenerator"
+    PromptToolsLlmAnalysis:
+      service_wait_timeout_sec: 10
+      request_timeout_sec: 90
+      services:
+        prompt: "/prompt/prompt"
+        embedding: "/prompt/embedding"
+        tokenize: "/prompt/tokenizer"
+    PromptToolsGenerator:
+      service_wait_timeout_sec: 10
+      prompt_request_timeout_sec: 90
+      services:
+        get_runnable_specs: "/capabilities/get_runnable_specs"
+      model_family: "openai"
+      model: "gpt-6.1-terra"
+      use_cache: true
+      use_chat_mode: false
+    telemetry:
+      fabric_status_topic: "/fabric/status"
+    experience:
+      enabled: false

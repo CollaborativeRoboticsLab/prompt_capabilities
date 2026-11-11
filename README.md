@@ -8,8 +8,8 @@ Provides capabilities2 runners that forward robot state and free-form task text 
 | --- | --- |
 | `PromptTextRunner` | Sends free-form text to prompt_tools. |
 | `PromptPoseRunner` | Sends explicit pose fields to prompt_tools. |
-| `PromptCurrentCartesianPoseRunner` | Reads the current manipulator Cartesian pose through `moveit2_capabilities/CurrentCartesianPoseRunner` and prompts it to the LLM. |
-| `PromptCurrentJointPoseRunner` | Reads the current manipulator joint pose through `moveit2_capabilities/CurrentJointPoseRunner` and prompts it to the LLM. |
+| `PromptCurrentCartesianPoseRunner` | Reads the current manipulator Cartesian pose through `grasping_capabilities/CurrentCartesianPoseRunner` and prompts it to the LLM. |
+| `PromptCurrentJointPoseRunner` | Reads the current manipulator joint pose through `grasping_capabilities/CurrentJointPoseRunner` and prompts it to the LLM. |
 | `PromptNamedPosesRunner` | Prompts the configured manipulator named poses and their descriptions for downstream reasoning. |
 | `PromptGripperStateRunner` | Reads the current gripper joint state through `gripper_capabilities/GripperStateRunner` and prompts it to the LLM. |
 | `PromptDetectionRunner` | Prompts over upstream YOLO detections and emits one selected detection for downstream bbox-guided grasp filtering. |
@@ -43,4 +43,4 @@ source install/setup.bash
 ros2 launch prompt_capabilities system.launch.py filename:=prompt_1.xml
 ```
 
-The wrapper starts Fabric, Capabilities2, and prompt tools automatically. Add `start_prompt_tools:=false` when you want to exclude `prompt_bridge`, and `start_experience_stack:=true` when you also want Experience and Supervisor in the same launch graph.
+The wrapper starts Fabric, Capabilities2, and prompt tools automatically. Add `start_prompt_tools:=false` when you want to exclude `prompt_bridge`. Experience is integrated into Fabric, and supervisor functionality is provided by the relevant packages; there is no separate Experience/Supervisor launch flag.

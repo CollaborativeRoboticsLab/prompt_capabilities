@@ -42,4 +42,4 @@ definition:
 relations:
   - subject: prompt_capabilities/PromptCurrentJointPoseRunner
     predicate: depends_on
-    object: moveit2_capabilities/CurrentJointPoseRunner
+    object: grasping_capabilities/CurrentJointPoseRunner

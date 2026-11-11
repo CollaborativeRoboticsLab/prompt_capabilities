@@ -1,0 +1,22 @@
+/**:
+  ros__parameters:
+    loop_rate: 5.0
+    db_file: ~/.ros/capabilities/capabilities.sqlite3
+    rebuild: true
+    event_history_size: 100
+    bond:
+      topic: "/capabilities/bond"
+      connect_timeout_sec: 10.0
+      heartbeat_timeout_sec: 10.0
+      heartbeat_period_sec: 0.1
+    package_paths:
+      - install/
+      - /opt/ros/jazzy/share
+    launch_proxy:
+      mirror_child_logs_to_rosout: false
+      feedback_child_log_enabled: true
+      feedback_child_log_level: error
+      override_output_method_to_log: true
+      suppress_child_process_output_to_screen: true
+      expand_opaque_functions_for_tracking: true
+      stop_wait_timeout_sec: 45.0

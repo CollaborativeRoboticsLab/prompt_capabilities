@@ -2,8 +2,8 @@
 <Plan>
     <Control type="sequential" name="prompt_cartesian_pose">
         <Runner
-            interface="moveit2_capabilities/CurrentCartesianPoseRunner"
-            provider="moveit2_capabilities/CurrentCartesianPoseRunner"
+            interface="grasping_capabilities/CurrentCartesianPoseRunner"
+            provider="grasping_capabilities/CurrentCartesianPoseRunner"
             from_frame="base_link"
             to_frame="tcp"
             time_buffer="5.0" />

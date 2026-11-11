@@ -23,6 +23,9 @@
   <depend>capabilities2_msgs</depend>
   <depend>capabilities2_runner</depend>
   <depend>capabilities2_events</depend>
+  <exec_depend>grasping_capabilities</exec_depend>
+  <exec_depend>gripper_capabilities</exec_depend>
+  <exec_depend>nav2_capabilities</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
